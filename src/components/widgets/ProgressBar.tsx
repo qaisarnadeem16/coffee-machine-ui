@@ -1,96 +1,149 @@
-import { useZakeke } from '@zakeke/zakeke-configurator-react';
-import { T } from 'Helpers';
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as CheckSolid } from '../../assets/icons/check-circle-solid_1.svg';
-import { Icon } from 'components/Atomic';
+import { useZakeke } from '@zakeke/zakeke-configurator-react';
 import useStore from 'Store';
 
-const LoadingLabel = styled.div`
-	color: #000;
-	font-size: 12px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 16px;
+const LoaderWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  z-index: 2;
 `;
 
-const LoaderContainer = styled.div<{ $isMobile: boolean }>`
-	height: 8px;
-	${(props) => (props.$isMobile ? `width: 250px` : `width: 600px`)};
-	border-radius: 4px;
-	background-color: #dbe2e6;
+const CircularContainer = styled.div`
+  position: relative;
+  width: 260px;
+  height: 260px;
 `;
 
-const LoadingPercentageLabel = styled.span`
-	color: #8fa4ae;
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 16px;
-	font-style: normal;
+const SVG = styled.svg`
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
-const LoadingPercentageandIconContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
+const CircleBg = styled.circle`
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 4;
 `;
 
-const CheckIcon = styled(Icon)`
-	cursor: unset;
-	color: #008556;
+const CircleProgress = styled.circle<{ $progress: number }>`
+  fill: none;
+  stroke: #c39a5f;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 565.48;
+  stroke-dashoffset: ${({ $progress }) => 565.48 - (565.48 * $progress) / 100};
+  transition: stroke-dashoffset 0.3s ease;
 `;
 
-const LoaderFill = styled.div<{ $completed: number; $bgColor: string; $isCompleted: boolean }>`
-	height: 100%;
-	border-radius: 4px;
-	margin: 7px 0px;
-	${(props) => `width: ${props.$completed}% `};
-	${(props) =>
-		props.$bgColor && props.$isCompleted ? `background-color: #008556` : `background-color: ${props.$bgColor}`};
-	border-radius: 'inherit';
+const Logo = styled.img`
+  width: 60px;
+  height: auto;
+  margin-bottom: 16px;
+`;
+
+const Brand = styled.div`
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Georgia', serif;
+`;
+
+const SubBrand = styled.div`
+  font-size: 14px;
+  margin-top: 4px;
+  letter-spacing: 2px;
+`;
+
+const StatusText = styled.div`
+  font-size: 14px;
+  margin-top: 20px;
+  color: #c39a5f;
+  font-weight: 500;
+  text-transform: uppercase;
+`;
+
+const Percentage = styled.div`
+  font-size: 32px;
+  font-weight: bold;
+  color: #c39a5f;
+  margin:0px 10px;
+`;
+
+const VideoPlayer = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+`;
+
+const CenterContent = styled.div`
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
 `;
 
 const ProgressBar: FC<{ $flagStartLoading: boolean; $bgColor: string; $completed: number }> = ({
-	$flagStartLoading,
-	$bgColor,
-	$completed
+  $flagStartLoading,
+  $bgColor,
+  $completed
 }) => {
-	const { isSceneLoading } = useZakeke();
-	const { isMobile } = useStore();
+  const { isSceneLoading } = useZakeke();
+  const { isMobile } = useStore();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-	return (
-		<div>
-			<LoadingLabel>
-				{isSceneLoading
-					? T._d('Loading your product...')
-						? T._d('Loading your product...')
-						: T._('Loading your product...', 'Composer')
-					: T._d('Loading complete.')
-					? T._d('Loading complete.')
-					: T._('Loading complete.', 'Composer')}
-			</LoadingLabel>
-			<LoaderContainer $isMobile={isMobile}>
-				<LoaderFill
-					$completed={!isSceneLoading && $flagStartLoading ? 100 : $completed}
-					$bgColor={$bgColor}
-					$isCompleted={!isSceneLoading && $flagStartLoading}
-				></LoaderFill>
-				<LoadingPercentageandIconContainer>
-					<LoadingPercentageLabel>
-						{isSceneLoading
-							? (T._d('In progress | ') ? T._d('In progress | ') : T._('In progress | ', 'Composer')) +
-							  `${$completed}%`
-							: '100%'}
-					</LoadingPercentageLabel>
-					{!isSceneLoading && (
-						<CheckIcon>
-							<CheckSolid />
-						</CheckIcon>
-					)}
-				</LoadingPercentageandIconContainer>
-				<p style={{paddingBottom:"20px" , fontWeight:"500"}} className="">Digital renderings may not match plaid cape fabrics perfectly. Our skilled sewers will.</p>
-			</LoaderContainer>
-		</div>
-	);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.play();
+      const handleVideoEnd = () => video.play();
+      video.addEventListener('ended', handleVideoEnd);
+      return () => video.removeEventListener('ended', handleVideoEnd);
+    }
+  }, []);
+
+  const progress = !isSceneLoading && $flagStartLoading ? 100 : $completed;
+
+  return (
+    <div>
+      <VideoPlayer ref={videoRef} id="myVideo">
+        <source src="/loading.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </VideoPlayer>
+
+      <LoaderWrapper>
+        <CircularContainer>
+          <SVG viewBox="0 0 200 200">
+            <CircleBg r="90" cx="100" cy="100" />
+            <CircleProgress r="90" cx="100" cy="100" $progress={progress} />
+          </SVG>
+
+          <CenterContent>
+            <Logo src="/logo.svg" alt="Milton Logo" />
+            <Brand>Milton</Brand>
+            <SubBrand>COFFEE CO.</SubBrand>
+            <StatusText>Configurator Loading...</StatusText>
+            <Percentage>{progress}%</Percentage>
+          </CenterContent>
+        </CircularContainer>
+      </LoaderWrapper>
+    </div>
+  );
 };
 
 export default ProgressBar;

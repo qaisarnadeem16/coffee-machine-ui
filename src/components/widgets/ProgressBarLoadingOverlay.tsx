@@ -21,16 +21,16 @@ const ProgressBarLoadingBackground = styled.div`
 // Container for the loading progress bar
 const ProgressBarLoadingContainer = styled.div<{ $isMobile?: boolean }>`
 	${(props) => (props.$isMobile ? `width: 300px` : `width: 650px`)};
-	height: 200px;
+	// height: 200px;
 	padding: 10px;
 	display: inline-flex;
 	padding: 48px 24px;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 8px;
-	border-radius: 4px;
-	background: var(--surface-default, #fff);
-	box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15), 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
+	// border-radius: 4px;
+	// background: var(--surface-default, #fff);
+	// box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15), 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
 `;
 
 // Component for the loading overlay with progress bar
@@ -65,7 +65,7 @@ const ProgressBarLoadingOverlay: FC<{ flagStartLoading: boolean }> = ({ flagStar
 				{!areTranslationsLoaded ? (
 					<SkeletonDialog />
 				) : (
-					<ProgressBar $flagStartLoading={flagStartLoading} $bgColor={'#F46200'} $completed={completed} />
+					<ProgressBar $flagStartLoading={flagStartLoading} $bgColor={'#ae8713ff'} $completed={completed} />
 				)}
 			</ProgressBarLoadingContainer>
 		</ProgressBarLoadingBackground>
