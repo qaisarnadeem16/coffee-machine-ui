@@ -15,8 +15,8 @@ const LoaderWrapper = styled.div`
 
 const CircularContainer = styled.div`
   position: relative;
-  width: 260px;
-  height: 260px;
+  width: 270px;
+  height: 270px;
 `;
 
 const SVG = styled.svg`
@@ -64,7 +64,6 @@ const SubBrand = styled.div`
 
 const StatusText = styled.div`
   font-size: 14px;
-  margin-top: 20px;
   color: #c39a5f;
   font-weight: 500;
   text-transform: uppercase;
@@ -74,7 +73,7 @@ const Percentage = styled.div`
   font-size: 32px;
   font-weight: bold;
   color: #c39a5f;
-  margin:0px 10px;
+  margin-bottom:15px;
 `;
 
 const VideoPlayer = styled.video`
@@ -134,9 +133,7 @@ const ProgressBar: FC<{ $flagStartLoading: boolean; $bgColor: string; $completed
           </SVG>
 
           <CenterContent>
-            <Logo src="/logo.svg" alt="Milton Logo" />
-            <Brand>Milton</Brand>
-            <SubBrand>COFFEE CO.</SubBrand>
+            <img src='/coffelogo.svg' alt='coffelogo' style={{width:'180px', height:'auto'}}/>
             <StatusText>Configurator Loading...</StatusText>
             <Percentage>{progress}%</Percentage>
           </CenterContent>
