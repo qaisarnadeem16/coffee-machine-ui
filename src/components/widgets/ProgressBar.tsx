@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useZakeke } from '@zakeke/zakeke-configurator-react';
 import useStore from 'Store';
@@ -44,24 +44,6 @@ const CircleProgress = styled.circle<{ $progress: number }>`
   transition: stroke-dashoffset 0.3s ease;
 `;
 
-const Logo = styled.img`
-  width: 60px;
-  height: auto;
-  margin-bottom: 16px;
-`;
-
-const Brand = styled.div`
-  font-size: 28px;
-  font-weight: bold;
-  font-family: 'Georgia', serif;
-`;
-
-const SubBrand = styled.div`
-  font-size: 14px;
-  margin-top: 4px;
-  letter-spacing: 2px;
-`;
-
 const StatusText = styled.div`
   font-size: 14px;
   color: #c39a5f;
@@ -73,10 +55,10 @@ const Percentage = styled.div`
   font-size: 32px;
   font-weight: bold;
   color: #c39a5f;
-  margin-bottom:15px;
+  margin-bottom: 15px;
 `;
 
-const VideoPlayer = styled.video`
+const VideoPlayer = styled.video<{ $isLoaded: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -84,6 +66,20 @@ const VideoPlayer = styled.video`
   width: 100%;
   height: 100%;
   z-index: -1;
+  opacity: ${({ $isLoaded }) => ($isLoaded ? 1 : 0)};
+  transition: opacity 0.5s ease;
+`;
+
+const VideoFallback = styled.div<{ $show: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+  z-index: -2;
+  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  transition: opacity 0.2s ease;
 `;
 
 const CenterContent = styled.div`
@@ -104,38 +100,109 @@ const ProgressBar: FC<{ $flagStartLoading: boolean; $bgColor: string; $completed
   const { isSceneLoading } = useZakeke();
   const { isMobile } = useStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(isMobile); // Skip video on mobile
+  const [userInteracted, setUserInteracted] = useState(false);
 
+  // Handle user interaction to allow video playback
+  useEffect(() => {
+    const handleInteraction = () => {
+      setUserInteracted(true);
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+    };
+
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('touchstart', handleInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+    };
+  }, []);
+
+  // Handle video loading and playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.play();
-      const handleVideoEnd = () => video.play();
-      video.addEventListener('ended', handleVideoEnd);
-      return () => video.removeEventListener('ended', handleVideoEnd);
+    if (!video || isMobile || videoError) return;
+
+    const startTime = performance.now();
+
+    const handleCanPlayThrough = () => {
+      const loadTime = performance.now() - startTime;
+      console.log(`Video loaded in ${loadTime.toFixed(2)}ms`);
+      setVideoLoaded(true);
+
+      // Only attempt playback if user has interacted or video is muted
+      if (userInteracted || video.muted) {
+        video.play().catch(err => {
+          console.error('Video play failed:', err);
+          setVideoError(true);
+        });
+      }
+    };
+
+    const handleError = (e: Event) => {
+      console.error('Video loading error:', e);
+      setVideoError(true);
+    };
+
+    video.addEventListener('canplaythrough', handleCanPlayThrough);
+    video.addEventListener('error', handleError);
+
+    video.load();
+
+    return () => {
+      video.removeEventListener('canplaythrough', handleCanPlayThrough);
+      video.removeEventListener('error', handleError);
+    };
+  }, [isMobile, userInteracted, videoError]);
+
+  // Attempt playback after user interaction
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && videoLoaded && userInteracted && !videoError && !isMobile) {
+      video.play().catch(err => {
+        console.error('Video play failed after interaction:', err);
+        setVideoError(true);
+      });
     }
-  }, []);
+  }, [userInteracted, videoLoaded, videoError, isMobile]);
 
   const progress = !isSceneLoading && $flagStartLoading ? 100 : $completed;
 
   return (
     <div>
-      <VideoPlayer ref={videoRef} id="myVideo">
-        <source src="/loading.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </VideoPlayer>
-
+      <VideoFallback $show={!videoLoaded || videoError} />
+      {!isMobile && (
+        <VideoPlayer 
+          ref={videoRef} 
+          id="myVideo" 
+          $isLoaded={videoLoaded && !videoError}
+          loop
+          preload="metadata"
+          muted
+          playsInline
+        >
+          <source src="/loading.mp4" type="video/mp4" />
+          <source src="/loading.webm" type="video/webm" />
+          Your browser does not support the video tag.
+        </VideoPlayer>
+      )}
       <LoaderWrapper>
         <CircularContainer>
           <SVG viewBox="0 0 200 200">
             <CircleBg r="90" cx="100" cy="100" />
             <CircleProgress r="90" cx="100" cy="100" $progress={progress} />
           </SVG>
-
           <CenterContent>
-            <img src='/coffelogo.svg' alt='coffelogo' style={{width:'180px', height:'auto'}}/>
+            <img 
+              src='/coffelogo.svg' 
+              alt='coffelogo' 
+              style={{ width: '180px', height: 'auto' }}
+            />
             <StatusText>Configurator Loading...</StatusText>
-            <Percentage>{progress}%</Percentage>
+            <Percentage>{Math.round(progress)}%</Percentage>
           </CenterContent>
         </CircularContainer>
       </LoaderWrapper>
