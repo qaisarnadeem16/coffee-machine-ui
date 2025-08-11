@@ -180,7 +180,7 @@ useEffect(() => {
   ref={videoRef}
   id="myVideo"
   $isLoaded={videoLoaded && !videoError}
-  loop={false}
+  loop={true}
   muted
   autoPlay
   playsInline
