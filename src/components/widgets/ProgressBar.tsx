@@ -127,7 +127,7 @@ useEffect(() => {
 
   video.muted = true;
   video.playsInline = true;
-  video.autoplay = true; // ✅ ensures immediate play
+  video.autoplay = true; 
   video.preload = 'auto';
 
   const tryPlay = () => {
@@ -153,11 +153,10 @@ useEffect(() => {
     }
   };
 
-  video.addEventListener('canplay', handleCanPlay); // earlier than canplaythrough
+  video.addEventListener('canplay', handleCanPlay); 
   video.addEventListener('error', handleError);
   video.addEventListener('ended', handleVideoEnd);
 
-  // Start loading immediately
   video.load();
   tryPlay();
 
@@ -172,22 +171,21 @@ useEffect(() => {
 
   return (
     <div>
-      {/* Fallback background */}
+
       <VideoFallback $show={!videoLoaded || videoError} />
       
-      {/* Video player */}
       <VideoPlayer
-  ref={videoRef}
-  id="myVideo"
-  $isLoaded={videoLoaded && !videoError}
-  loop={true}
-  muted
-  autoPlay
-  playsInline
-  preload="auto"
->
-  <source src="/loading.mp4" type="video/mp4" />
-</VideoPlayer>
+         ref={videoRef}
+         id="myVideo"
+         $isLoaded={videoLoaded && !videoError}
+         loop={true}
+         muted
+         autoPlay
+         playsInline
+         preload="auto"
+      >
+         <source src="/loading.mp4" type="video/mp4" />
+      </VideoPlayer>
 
 
       <LoaderWrapper>
