@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(global = global || self, factory(global.THREE = {}));
-}(this, function (exports) { 'use strict';
+}(this, function (exports) { 
 
 	// Polyfills
 
@@ -42779,8 +42779,8 @@
 
 					}
 
-					var path = prototypeAction && prototypeAction.
-						_propertyBindings[ i ].binding.parsedPath;
+					var path = prototypeAction && prototypeAction
+						._propertyBindings[ i ].binding.parsedPath;
 
 					binding = new PropertyMixer(
 						PropertyBinding.create( root, trackName, path ),

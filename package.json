@@ -26,13 +26,14 @@
 		"typescript": "^4",
 		"zustand": "^4.4.7"
 	},
-	"scripts": {
-		"copy": "cpy node_modules/@zakeke/zakeke-configurator-react/dist/globals*.js public/",
-		"start": "npm run copy && react-scripts start",
-		"build": "npm run copy && react-scripts build",
-		"test": "npm run copy && react-scripts test",
-		"eject": "npm run copy && react-scripts eject"
-	},
+"scripts": {
+  "copy": "cpy node_modules/@zakeke/zakeke-configurator-react/dist/globals*.js public/",
+  "start": "npm run copy && DISABLE_ESLINT_PLUGIN=true react-scripts start",
+  "build": "npm run copy && DISABLE_ESLINT_PLUGIN=true react-scripts build",
+  "test": "npm run copy && react-scripts test",
+  "eject": "npm run copy && react-scripts eject"
+},
+
 	"eslintConfig": {
 		"extends": [
 			"react-app",

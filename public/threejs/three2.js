@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(factory((global.THREE = global.THREE || {})));
-}(this, (function (exports) { 'use strict';
+}(this, (function (exports) { 
 
 	// Polyfills
 
@@ -52,7 +52,7 @@
 
 			Object.assign = function ( target ) {
 
-				'use strict';
+				
 
 				if ( target === undefined || target === null ) {
 
@@ -19466,8 +19466,8 @@
 					for ( var i = 0, i4 = dstOffset;
 										i !== nPlanes; ++ i, i4 += 4 ) {
 
-						plane.copy( planes[ i ] ).
-								applyMatrix4( viewMatrix, viewNormalMatrix );
+						plane.copy( planes[ i ] )
+								.applyMatrix4( viewMatrix, viewNormalMatrix );
 
 						plane.normal.toArray( dstArray, i4 );
 						dstArray[ i4 + 3 ] = plane.constant;
@@ -20809,8 +20809,8 @@
 			if ( geometry.boundingSphere === null )
 				geometry.computeBoundingSphere();
 
-			_sphere.copy( geometry.boundingSphere ).
-				applyMatrix4( object.matrixWorld );
+			_sphere.copy( geometry.boundingSphere )
+				.applyMatrix4( object.matrixWorld );
 
 			return isSphereViewable( _sphere );
 
@@ -23834,7 +23834,7 @@
 
 				for ( var j = 0; j < 2; j ++ ) {
 
-					var vertex = vertices[ edges [ 2 * i + j ] ];
+					var vertex = vertices[ edges[ 2 * i + j ] ];
 
 					var index = 6 * i + 3 * j;
 					coords[ index + 0 ] = vertex.x;
@@ -30709,8 +30709,8 @@
 
 				var stride = this.getValueSize();
 				this.times = AnimationUtils.arraySlice( times, from, to );
-				this.values = AnimationUtils.
-						arraySlice( this.values, from * stride, to * stride );
+				this.values = AnimationUtils
+						.arraySlice( this.values, from * stride, to * stride );
 
 			}
 
@@ -37987,8 +37987,8 @@
 
 					}
 
-					var path = prototypeAction && prototypeAction.
-							_propertyBindings[ i ].binding.parsedPath;
+					var path = prototypeAction && prototypeAction
+							._propertyBindings[ i ].binding.parsedPath;
 
 					binding = new PropertyMixer(
 							PropertyBinding.create( root, trackName, path ),

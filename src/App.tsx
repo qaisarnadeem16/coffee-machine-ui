@@ -3,7 +3,6 @@ import { T } from 'Helpers';
 import LayoutDesktop from 'components/desktop/LayoutDesktop';
 import LayoutMobile from 'components/mobile/LayoutMobile';
 import { Dialog, MessageDialog, useDialogManager } from 'components/dialogs/Dialogs';
-import LoadingOverlay from 'components/widgets/LoadingOverlay';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import 'react-tippy/dist/tippy.css';
@@ -67,7 +66,6 @@ function App() {
 		personalizedMessages,
 		product,
 		isSceneLoading,
-		isAssetsLoading,
 		culture,
 		currency,
 		groups,
@@ -81,7 +79,6 @@ function App() {
 	} = useZakeke();
 
 	const {
-		isLoading,
 		setPriceFormatter,
 		setSelectedAttributeId,
 		setSelectedGroupId,
