@@ -277,7 +277,7 @@ function App() {
 			{!isProductUnpublished && (
 				<>
 					{isMobile ? <LayoutMobile /> : <LayoutDesktop />}
-					{(isLoading || isSceneLoading || isAssetsLoading) && <LoadingOverlay />}
+					{/* {(isLoading || isSceneLoading || isAssetsLoading) && <LoadingOverlay />} */}
 					{delayedLoading && <ProgressBarLoadingOverlay flagStartLoading={flagStartLoading} />}
 					{!isSceneLoading && <TryOnViewer />}
 				</>
