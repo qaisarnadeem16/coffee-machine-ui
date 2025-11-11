@@ -9,7 +9,6 @@ export const LayoutDesktopContainer = styled.div`
 	position: relative;
 	display: flex;
 	flex-flow: column;
-	padding: 40px 60px;
 	@media (max-width: 1024px) {
 		flex-direction: column;
 		padding: 0px;
@@ -27,7 +26,8 @@ export const Top = styled.div`
 	height: 100%;
 	position: relative;
 	display: grid;
-	grid-template-columns: 1fr 40%;
+	gap: 20px;
+	grid-template-columns: 1fr 30%;
 	min-height: 0;
   
   @media (max-width: 1024px) {
@@ -48,7 +48,7 @@ function LayoutDesktop() {
 				<Viewer3D />
 				<DesktopRightSidebar />
 			</Top>
-			<FooterDesktop />
+			{/* <FooterDesktop /> */}
 		</LayoutDesktopContainer>
 	);
 }

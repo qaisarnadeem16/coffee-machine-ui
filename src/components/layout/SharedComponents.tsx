@@ -32,19 +32,22 @@ export const GroupItem = styled.div`
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
-	height: 100px;
-	width: 100px;
+	height: 121px;
+	width: 100%;
 	margin-bottom: 20px;
+	margin-top: 20px;
 	text-align: center;
 	cursor: pointer;
-	padding: 0px 10px 0px 10px;
-
+	padding: 10px;
+	gap: 10px;
+border: 2px solid #A0805A;
+border-radius: 12px;
 	&:hover {
-		background-color: white;
+		background-color: #A0805A;
 	}
 
 	&.selected {
-		background-color: white;
+		background-color: #A0805A;
 	}
 
 	span {
@@ -67,11 +70,13 @@ export const GroupItem = styled.div`
 `;
 
 export const GroupIcon = styled.img`
-	width: 100%;
-	height: 40px;
+	width: 88px;
+	height: 70px;
 	object-fit: contain;
-	margin-bottom: 10px;
-    max-width: 40%;
+	margin-bottom: 5px;
+	border-radius: 10px;
+	
+    /* max-width: 40%; */
 `;
 
 export const GroupStar = styled(Icon)`
@@ -80,13 +85,16 @@ export const GroupStar = styled(Icon)`
 `;
 
 export const AttributesContainer = styled.div`
-	background-color: white;
+	/* background-color: white; */
 	flex: 1;
 	padding: 40px;
 	min-height: 0;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
+		background: #EEEEEE;
+box-shadow: 0px 0px 9.4px 2px #A0805A;
+
 
 	@media (max-width: 1024px) {
 		padding: 5px;
@@ -121,8 +129,8 @@ export const ItemAccordion = styled.div<{ opened?: boolean }>`
 	display: grid;
 	grid-template-columns: 1fr 20px;
 	cursor: pointer;
-	margin-bottom: 20px;
-	${(props) => props.opened && `border-bottom: 5px solid #f5f6f7;`}
+	/* margin-bottom: 20px; */
+	/* ${(props) => props.opened && `border-bottom: 5px solid #f5f6f7;`} */
 `;
 
 export const ItemAccordionName = styled.span`
@@ -165,7 +173,7 @@ export const Options = styled.div`
 	user-select: none;
 	align-items: start;
 	justify-content: start;
-	padding: 30px 0px;
+	padding: 10px;
 	width: 100%;
 	@media (min-width: 1920px) {
 		grid-template-columns: repeat(auto-fill, minmax(100px, 110px));
@@ -200,8 +208,11 @@ export const Template = styled.div<{ selected?: boolean }>`
 export const ViewerContainer = styled.div`
 	position: relative;
 	min-height: 0;
+	padding: 40px 60px;
 
+	
 	@media (max-width: 1024px) {
+		
 		height: 100%;
 	}
 `;

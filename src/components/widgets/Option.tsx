@@ -11,25 +11,34 @@ const OptionContainer = styled.div<{ optionShape: number, selected: boolean, has
     align-items:center;
     cursor:pointer;
     position:relative;
-    padding: ${props => props.hasDescriptionIcon ? '26px' : '10px'} 0px 10px 0;
+    /* padding: ${props => props.hasDescriptionIcon ? '26px' : '10px'} 0px 10px 0; */
     user-select: none;
-    width: 100%;
+    width: 126px;
+    height: 106px;
+    border-radius: 10px;
+    gap: 2px;
     min-width: 0;
-
+        border: 1px solid #00000033;
+padding: 5px;
     &:hover {
-        background-color: #f5f6f7;
+        border-radius: 10px;
+        border: 1px solid #00000033;
     }
     
     ${props => props.selected && `
-        background-color: #f5f6f7;
+        // background-color: #f5f6f7;
+        border: 2px solid #A0805A;
+
     `}
 `;
 
 const OptionIconContainerStyled = styled.div`
    overflow: hidden;
-   width: 100%;
-   aspect-ratio: 1;
-   padding: 0 10px;
+   width: 50px;
+   height: 50px;
+   object-fit: cover;
+   /* aspect-ratio: 1; */
+   /* padding: 0 10px; */
 `;
 
 const OptionIconContainer: FC<{
@@ -52,7 +61,7 @@ const OptionIcon = styled.img<{ optionShape?: boolean }>`
 
 const OptionName = styled.span`
     font-size:12px;
-    margin-top: 10px;
+    margin-top: 5px;
     text-align:center;
     overflow:hidden;
 
@@ -103,9 +112,9 @@ const OptionItem: FC<{ selectedAttribute: Attribute | null | undefined, option: 
         onClick={() => handleOptionSelection(option)}>
 
         <OptionIconContainer>
-            {option.description && option.description.length !== 0 &&
+            {/* {option.description && option.description.length !== 0 &&
                 <Tooltip key={"tooltip" + option.guid} optionDescription={option.description} />
-            }
+            } */}
             {option.imageUrl && <OptIconContainer><OptionIcon loading="lazy" 
             // fetchpriority="low" 
             src={option.imageUrl ?? ""} optionShape={option.attribute.optionShapeType === 2} /></OptIconContainer>}

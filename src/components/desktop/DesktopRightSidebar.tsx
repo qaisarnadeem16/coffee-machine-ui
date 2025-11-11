@@ -36,12 +36,16 @@ import {
 } from '../layout/SharedComponents';
 import Steps from '../layout/Steps';
 import TemplateGroup from 'components/TemplateGroup';
+import TopBar from './Topbar';
 
 export const DesktopRightSidebarContainer = styled.div`
 	display: flex;
 	flex-flow: row;
 	justify-content: flex-end;
 	min-height: 0;
+
+
+
 
 	@media (max-width: 1024px) {
 		width: 100%;
@@ -98,8 +102,8 @@ const DesktopRightSidebar = () => {
 	const currentTemplateGroups = selectedStep
 		? selectedStep.templateGroups
 		: selectedGroup
-		? selectedGroup.templateGroups
-		: [];
+			? selectedGroup.templateGroups
+			: [];
 
 	const currentItems = [...currentAttributes, ...currentTemplateGroups].sort(
 		(a, b) => a.displayOrder - b.displayOrder
@@ -416,7 +420,7 @@ const DesktopRightSidebar = () => {
 
 	return (
 		<DesktopRightSidebarContainer>
-			<GroupsContainer>
+			{/* <GroupsContainer>
 				{actualGroups &&
 					!(actualGroups.length === 1 && actualGroups[0].name.toLowerCase() === 'other') &&
 					actualGroups.map((group) => {
@@ -436,8 +440,8 @@ const DesktopRightSidebar = () => {
 													? savedCompositionsIcon
 													: group.imageUrl
 												: group.id === -2
-												? textIcon
-												: star
+													? textIcon
+													: star
 										}
 									/>
 									<span>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
@@ -445,10 +449,42 @@ const DesktopRightSidebar = () => {
 							);
 						else return null;
 					})}
-			</GroupsContainer>
+			</GroupsContainer> */}
+
 			<AttributesContainer key={selectedAttributeId}>
+				<TopBar/>
+				<div className="grid lg:grid-cols-3 grid-cols-1 gap-3 py-3 ">
+					{actualGroups &&
+						!(actualGroups.length === 1 && actualGroups[0].name.toLowerCase() === 'other') &&
+						actualGroups.map((group) => {
+							if (group)
+								return (
+									<GroupItem
+										key={group.guid}
+										className={'group-item' + (group.id === selectedGroupId ? ' selected' : '')}
+										onClick={() => handleGroupSelection(group.id)}
+									>
+										<GroupIcon
+											loading='lazy'
+											// fetchpriority="low"
+											src={
+												group.imageUrl && group.imageUrl !== ''
+													? group.id === -3
+														? savedCompositionsIcon
+														: group.imageUrl
+													: group.id === -2
+														? textIcon
+														: star
+											}
+										/>
+										<span className={`font-medium text-sm ${group.id === selectedGroupId ? 'text-white ' : 'text-[#000000B2]'}`}>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
+									</GroupItem>
+								);
+							else return null;
+						})}
+				</div>
 				{/* Steps */}
-				{selectedGroup && selectedGroupId !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (
+				{/* {selectedGroup && selectedGroupId !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (
 					<Steps
 						key={'steps-' + selectedGroupId}
 						hasNextGroup={groupIndex !== actualGroups.length - 1}
@@ -459,14 +495,14 @@ const DesktopRightSidebar = () => {
 						steps={selectedGroup.steps}
 						onStepChange={handleStepChange}
 					/>
-				)}
+				)} */}
 
 				{selectedGroupId && selectedGroupId !== -2 && selectedGroupId !== -3 && (
 					<>
 						{/* Attributes */}
 						{selectedGroup?.direction === 0 && (
 							<>
-								<CarouselContainer
+								{/* <CarouselContainer
 									key={selectedGroupId}
 									slidesToShow={window.innerWidth <= 1600 ? 3 : 4}
 									slideIndex={selectedCarouselSlide}
@@ -524,7 +560,7 @@ const DesktopRightSidebar = () => {
 													</ItemContainer>
 												);
 										})}
-								</CarouselContainer>
+								</CarouselContainer> */}
 
 								{lastSelectedItem?.type === 'attribute' ? (
 									<>
@@ -572,7 +608,10 @@ const DesktopRightSidebar = () => {
 																: () => handleAttributeSelection(item.id, true)
 														}
 													>
-														<ItemAccordionName>{T._d(item.name)}</ItemAccordionName>
+														<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
+
+															{T._d(item.name)}
+															</h2>
 
 														{!selectedGroup.attributesAlwaysOpened && (
 															<ArrowIcon
@@ -583,11 +622,11 @@ const DesktopRightSidebar = () => {
 															/>
 														)}
 													</ItemAccordion>
-													{item.description !== '' && (
-														<ItemAccordionDescription>
+													{/* {item.description !== '' && (
+														<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
 															{T._d(item.description)}
-														</ItemAccordionDescription>
-													)}
+														</h2>
+													)} */}
 
 													{attributesOpened.get(item.id) && (
 														<OptionsContainer>
