@@ -11,87 +11,99 @@ import noImage from '../../assets/images/no_image.png';
 export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 	align-items: center;
 	justify-content: center;
-	min-width: 140px;
-	max-width: 140px;
-	width: 140px;
-	height: 140px;
-	min-height: 140px;
-	max-height: 140px;
+	min-width: 120px;
+	max-width: 120px;
+	width: 120px;
+	height: 120px;
+	min-height: 120px;
+	max-height: 120px;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	border-right: 2px #fff solid;
 	position: relative;
-	${(props) => props.selected && `background-color: #f7f7f7;`}
+	padding: 8px;
+	cursor: pointer;
+	z-index:1000;
+`;
+
+// Inner card wrapper for the menu item
+export const MenuItemCard = styled.div<{ selected?: boolean }>`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid #A0805A;
+	border-radius: 12px;
+	padding: 5px 5px;
+	background-color: ${(props) => (props.selected ? '#A0805A' : '#ffffff')};
+	transition: all 0.2s ease;
+	position: relative;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(160, 128, 90, 0.2);
+	}
 `;
 
 // Styled component for the image of each menu item
-export const MenuItemImage = styled.img<{ isRound?: boolean }>`
-	width: 64px;
-	height: 64px;
-	object-fit: ${(props) => (props.isRound ? 'cover' : 'contain')};
-	margin-bottom: 20px;
-	border-radius: ${(props) => (props.isRound ? '64px!important' : '0')};
+export const MenuItemImage = styled.img<{ isRound?: boolean; selected?: boolean }>`
+	width: 55px;
+	height: 55px;
+	object-fit: ${(props) => (props.isRound ? 'cover' : 'cover')};
+	margin-bottom: 8px;
+	border-radius: ${(props) => (props.isRound ? '50%' : '6px')};
+	// filter: ${(props) => (props.selected ? 'brightness(0) invert(1)' : 'none')};
 `;
 
 // Styled component for the wrapper of multiple images in a menu item
-export const MenuItemImagesWrapper = styled.div`
+export const MenuItemImagesWrapper = styled.div<{ selected?: boolean }>`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	position: relative;
-	top: -10px;
+	gap: 2px;
+	margin-bottom: 8px;
 `;
 
 // Styled component for each image wrapper in the menu item
 export const MenuItemImagesImageWrapper = styled.div`
-	width: 35px;
-	height: 35px;
-	&:nth-child(1) {
-		border-right: 1px #ddd dotted;
-		border-bottom: 1px #ddd dotted;
-	}
-
-	&:nth-child(2) {
-		border-bottom: 1px #ddd dotted;
-	}
-
-	&:nth-child(3) {
-		border-right: 1px #ddd dotted;
-	}
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	border-radius: 4px;
 `;
 
 // Styled component for the label of each menu item
-export const MenuItemLabel = styled.span`
-	font-size: 14px;
-	font-weight: 500;
-	position: absolute;
-	bottom: 20px;
-	left: 0;
-	right: 0;
+export const MenuItemLabel = styled.span<{ selected?: boolean }>`
+	font-size: 12px;
+	font-weight: 600;
 	text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	width: 100%;
+	color: ${(props) => (props.selected ? '#ffffff' : '#333333')};
 `;
 
 // Styled component for each image in the menu item
-export const MenuItemImagesImage = styled.img<{ isRound?: boolean }>`
+export const MenuItemImagesImage = styled.img<{ isRound?: boolean; selected?: boolean }>`
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	padding: 3px;
-	border-radius: ${(props) => (props.isRound ? '64px!important' : '0')};
+	border-radius: ${(props) => (props.isRound ? '50%' : '4px')};
+	filter: ${(props) => (props.selected ? 'brightness(0) invert(1)' : 'none')};
 `;
 
 // Styled component for the icon of each menu item
-export const MenuItemIcon = styled.div`
+export const MenuItemIcon = styled.div<{ selected?: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 40px;
-	margin-bottom: 20px;
-	width: 64px;
-	height: 64px;
+	font-size: 32px;
+	margin-bottom: 8px;
+	width: 48px;
+	height: 48px;
+	color: ${(props) => (props.selected ? '#ffffff' : '#A0805A')};
 `;
 
 // Function to determine the visibility of left and right arrows based on scroll position
@@ -128,17 +140,26 @@ interface MenuItemProps {
 	description?: string | null;
 	isRound?: boolean;
 	children?: React.ReactNode;
+	style?: React.CSSProperties;
 }
 
 // Styled component for the wrapper of menu items
 const MenuItemsWrapper = styled.div`
 	display: flex;
+	justify-content: space-evenly;
 	max-width: 100%;
-	min-height: 141px;
+	min-height: 116px;
 	width: 100%;
-	overflow-x: auto;
-	background-color: #ffffff;
-	border-top: 1px #ffffff solid;
+	// overflow-x: auto;
+	background-color: #fff;
+	// border-top: 1px #e0e0e0 solid;
+	padding: 8px 0;
+	z-index:20;
+	position:static;
+	bottom:0;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	box-shadow: 0px 0px 4px 0px #A0805A;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 
@@ -155,15 +176,24 @@ const MenuItemsWrapper = styled.div`
 const ArrowCss = css`
 	position: absolute;
 	left: 10px;
-	bottom: 60px;
-	background-color: #f1f1f1;
-	border-radius: 30px;
+	bottom: 50%;
+	transform: translateY(50%);
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 50%;
 	width: 32px;
 	height: 32px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	z-index: 3;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	transition: all 0.2s ease;
+
+	&:hover {
+		background-color: #ffffff;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
 `;
 
 // Styled component for the left arrow
@@ -180,12 +210,14 @@ const ArrowRight = styled.div`
 
 // Styled component for the left arrow icon
 const ArrowLeftIconStyled = styled(Icon)`
-	font-size: 22px;
+	font-size: 18px;
+	color: #A0805A;
 `;
 
 // Styled component for the right arrow icon
 const ArrowRightIconStyled = styled(Icon)`
-	font-size: 22px;
+	font-size: 18px;
+	color: #A0805A;
 `;
 
 // Container component for mobile menu items
@@ -253,27 +285,38 @@ export const MenuItem: FC<MenuItemProps> = (props) => {
 			{props.description && props.description.length !== 0 && (
 				<Tooltip optionDescription={props.description} $isMobile />
 			)}
-			{props.imageUrl && (
-				<MenuItemImage isRound={props.isRound} src={props.imageUrl} alt={props.label} loading='lazy' />
-			)}
-			{!props.imageUrl && props.icon && <MenuItemIcon>{props.icon}</MenuItemIcon>}
-			{props.images && (
-				<MenuItemImagesWrapper>
-					{[0, 0, 0, 0].map((_, index) => (
-						<MenuItemImagesImageWrapper key={index}>
-							{props.images!.length > index && (
-								<MenuItemImagesImage
-									isRound={props.isRound}
-									src={props.images ? props.images[index] : noImage}
-									alt={props.label}
-									loading='lazy'
-								/>
-							)}
-						</MenuItemImagesImageWrapper>
-					))}
-				</MenuItemImagesWrapper>
-			)}
-			{!props.hideLabel && <MenuItemLabel>{props.label}</MenuItemLabel>}
+			<MenuItemCard selected={props.selected}>
+				{props.imageUrl && (
+					<MenuItemImage
+						isRound={props.isRound}
+						selected={props.selected}
+						src={props.imageUrl}
+						alt={props.label}
+						loading="lazy"
+					/>
+				)}
+				{!props.imageUrl && props.icon && (
+					<MenuItemIcon selected={props.selected}>{props.icon}</MenuItemIcon>
+				)}
+				{props.images && (
+					<MenuItemImagesWrapper selected={props.selected}>
+						{[0, 0, 0, 0].map((_, index) => (
+							<MenuItemImagesImageWrapper key={index}>
+								{props.images!.length > index && (
+									<MenuItemImagesImage
+										isRound={props.isRound}
+										selected={props.selected}
+										src={props.images ? props.images[index] : noImage}
+										alt={props.label}
+										loading="lazy"
+									/>
+								)}
+							</MenuItemImagesImageWrapper>
+						))}
+					</MenuItemImagesWrapper>
+				)}
+				{!props.hideLabel && <MenuItemLabel selected={props.selected}>{props.label}</MenuItemLabel>}
+			</MenuItemCard>
 		</MobileItemContainer>
 	);
 };

@@ -11,6 +11,10 @@ const TopBarContainer = styled.div`
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #d1c5b3;
+   @media (max-width: 1024px) {
+    border-bottom: none;
+    padding:20px 10px;  
+  }
 `;
 
 const PriceBox = styled.div`

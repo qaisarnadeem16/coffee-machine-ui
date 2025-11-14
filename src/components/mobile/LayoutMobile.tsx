@@ -1,3 +1,4 @@
+import TopBar from 'components/desktop/Topbar';
 import FooterMobile from 'components/mobile/FooterMobile';
 import MobileMenu from 'components/mobile/MobileMenu';
 import Viewer3D from 'components/Viewer3D';
@@ -24,7 +25,7 @@ export const Container = styled.div`
 export const MobileContainer = styled.div`
   position: relative;
   display:grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto;
   height:100%;
   width:100%;
   overflow:hidden;
@@ -49,9 +50,10 @@ export const Top = styled.div`
 function LayoutMobile() {
   return (
     <MobileContainer>
+      <TopBar/>
       <Viewer3D /> {/* Renders the 3D viewer */}
       <MobileMenu /> {/* Renders the mobile menu */}
-      <FooterMobile /> {/* Renders the mobile footer */}
+      {/* <FooterMobile /> Renders the mobile footer */}
     </MobileContainer>
   );
 }
