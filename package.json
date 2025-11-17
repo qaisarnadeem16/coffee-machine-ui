@@ -29,7 +29,7 @@
 "scripts": {
   "copy": "cpy node_modules/@zakeke/zakeke-configurator-react/dist/globals*.js public/",
   "start": "npm run copy && cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
-  "build": "npm run copy && react-scripts build",
+  "build": "npm run copy && cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
   "test": "npm run copy && react-scripts test",
   "eject": "npm run copy && react-scripts eject"
 },
