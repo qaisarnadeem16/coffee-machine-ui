@@ -1,3 +1,4 @@
+import { useZakeke } from '@zakeke/zakeke-configurator-react';
 import TopBar from 'components/desktop/Topbar';
 import FooterMobile from 'components/mobile/FooterMobile';
 import MobileMenu from 'components/mobile/MobileMenu';
@@ -48,11 +49,15 @@ export const Top = styled.div`
 
 // LayoutMobile component for the mobile layout
 function LayoutMobile() {
+  const {isSceneLoading}=useZakeke()
   return (
     <MobileContainer>
       <TopBar/>
       <Viewer3D /> {/* Renders the 3D viewer */}
-      <MobileMenu /> {/* Renders the mobile menu */}
+      
+      {!isSceneLoading && <MobileMenu />}
+
+       {/* Renders the mobile menu */}
       {/* <FooterMobile /> Renders the mobile footer */}
     </MobileContainer>
   );

@@ -56,10 +56,10 @@ const BackdropOverlay = styled.div`
 // Close button
 const CloseButton = styled.button`
 	position: absolute;
-	top: 15px;
-	right: 10px;
-	height:40px;
-	widht:40px;
+	top: opx;
+	right: 5px;
+	height:20px;
+	widht:20px;
 	border-radius: 50%;
 	border: none;
 	cursor: pointer;
@@ -77,66 +77,69 @@ const CloseButton = styled.button`
 
 // Section container
 const SectionContainer = styled.div`
-	margin-bottom: 24px;
+	margin-bottom: 14px;
 
 `;
 
 // Section title
 const SectionTitle = styled.h2`
-	font-size: 20px;
+	font-size: 14px;
 	font-weight: 600;
 	color: #1a1a1a;
-	margin: 0 0 20px 0;
+	margin: 0 0 6px 0;
 	padding-right: 40px;
 `;
 
 // Section subtitle
 const SectionSubtitle = styled.div`
-	font-size: 16px;
+	font-size: 12px;
 	color: #000;
 	font-weight:700;
-	margin-bottom: 12px;
+	margin-bottom: 6px;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 `;
 
 // Grid container for options
 const OptionsGrid = styled.div<{ columns?: number }>`
-	display: grid;
-	grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
-	gap: 12px;
-	margin-bottom: 24px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
+  gap: ${props => (props.columns === 6 ? '6px' : '12px')}; // smaller gap for circles
+  margin-bottom: 10px;
 `;
+
 
 // Option card
-const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean }>`
-	background: white;
-	border: 2px solid ${props => props.selected ? '#A0805A' : '#e0e0e0'};
-	border-radius: 12px;
-	padding: 16px 12px;
-	cursor: pointer;
-	transition: all 0.2s ease;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 8px;
-	min-height: 100px;
+const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
+  background: white;
+  border: 2px solid ${props => props.selected ? '#A0805A' : '#e0e0e0'}; /* always show 2px border */
+  border-radius: ${props => (props.columns === 6 ? '50%' : '12px')};
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
+  padding: ${props => (props.columns === 6 ? '6px' : `6px`)};
 
-	&:hover {
-		border-color: ${props => props.selected ? '#A0805A' : '#A0805A'};
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(160, 128, 90, 0.2);
-	}
+  &:hover {
+    border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
+    transform: translateY(-2px);
+    box-shadow: ${props => (props.columns === 6 ? 'none' : '0 4px 12px rgba(160, 128, 90, 0.2)')};
+  }
 
-	&:active {
-		transform: translateY(0);
-	}
+  &:active {
+    transform: translateY(0);
+  }
 `;
+
 
 // Option image container
 const OptionImageContainer = styled.div<{ isRound?: boolean }>`
-	width: 60px;
-	height: 60px;
+	width: 44px;
+	height: 44px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -153,11 +156,11 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 
 // Option label
 const OptionLabel = styled.div`
-	font-size: 13px;
+	font-size: 10px;
 	font-weight: 500;
 	color: #333;
 	text-align: center;
-	line-height: 1.3;
+	// line-height: 1.3;
 `;
 
 // Color swatch for color options
@@ -244,8 +247,8 @@ const MobileMenu = () => {
 	const currentTemplateGroups = selectedStep
 		? selectedStep.templateGroups
 		: selectedGroup
-		? selectedGroup.templateGroups
-		: [];
+			? selectedGroup.templateGroups
+			: [];
 
 	const currentItems = [...currentAttributes, ...currentTemplateGroups].sort(
 		(a, b) => a.displayOrder - b.displayOrder
@@ -370,11 +373,11 @@ const MobileMenu = () => {
 
 		try {
 			if ((window as any).algho) (window as any).algho.sendUserStopForm(true);
-		} catch (e) {}
+		} catch (e) { }
 	};
 
 	const setTemplateByID = async (templateID: number) => await setTemplate(templateID);
-	
+
 	// Initial template selection
 	useEffect(() => {
 		if (templates.length > 0 && !currentTemplate) setTemplateByID(templates[0].id);
@@ -470,35 +473,37 @@ const MobileMenu = () => {
 
 		return (
 			<FullViewContent>
-				<CloseButton
-					onClick={() => {
-						setShowFullView(false);
-						setSelectedGroupId(null);
-					}}
-				>
-					<svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_63_94)">
-<rect x="13.8999" y="9.90002" width="31" height="31" rx="15.5" fill="white"/>
-<path d="M24.8325 29.9661L33.9672 20.834M24.8325 20.834L33.9672 29.9661" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-</g>
-<defs>
-<filter id="filter0_d_63_94" x="-9.72748e-05" y="2.47955e-05" width="58.8" height="58.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="6.95"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_63_94"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_63_94" result="shape"/>
-</filter>
-</defs>
-</svg>
+				<div className="flex items-center">
+					<CloseButton
+						onClick={() => {
+							setShowFullView(false);
+							setSelectedGroupId(null);
+						}}
+					>
+						<svg width="48" height="40" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g filter="url(#filter0_d_63_94)">
+								<rect x="13.8999" y="9.90002" width="31" height="31" rx="15.5" fill="white" />
+								<path d="M24.8325 29.9661L33.9672 20.834M24.8325 20.834L33.9672 29.9661" stroke="black" stroke-width="1.5" stroke-linecap="round" />
+							</g>
+							<defs>
+								<filter id="filter0_d_63_94" x="-9.72748e-05" y="2.47955e-05" width="58.8" height="58.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+									<feFlood flood-opacity="0" result="BackgroundImageFix" />
+									<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+									<feOffset dy="4" />
+									<feGaussianBlur stdDeviation="6.95" />
+									<feComposite in2="hardAlpha" operator="out" />
+									<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
+									<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_63_94" />
+									<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_63_94" result="shape" />
+								</filter>
+							</defs>
+						</svg>
 
-				</CloseButton>
+					</CloseButton>
 
-				<SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle>
+					<SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle>
 
+				</div>
 				{currentItems.map((item, index) => {
 					if (item instanceof ThemeTemplateGroup) {
 						return (
@@ -515,13 +520,14 @@ const MobileMenu = () => {
 						return (
 							<SectionContainer key={attribute.id}>
 								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
-								<OptionsGrid columns={attribute.optionShapeType === 2 ? 2 : 3}>
-									{attribute.options.map((option) => 
+								<OptionsGrid columns={attribute.optionShapeType === 2 ? 6 : 3}>
+									{attribute.options.map(option =>
 										option.enabled && (
 											<OptionCard
 												key={option.id}
 												selected={option.selected}
 												isRound={attribute.optionShapeType === 2}
+												columns={attribute.optionShapeType === 2 ? 6 : 3}
 												onClick={() => handleOptionSelection(option)}
 											>
 												{option.imageUrl ? (
@@ -529,9 +535,10 @@ const MobileMenu = () => {
 														<img src={option.imageUrl} alt={T._d(option.name)} />
 													</OptionImageContainer>
 												) : (
-													<ColorSwatch  isRound={attribute.optionShapeType === 2} />
+													<ColorSwatch isRound={attribute.optionShapeType === 2} />
 												)}
-												{!attribute.hideOptionsLabel && (
+
+												{attribute.optionShapeType !== 2 && (
 													<OptionLabel>{T._d(option.name)}</OptionLabel>
 												)}
 											</OptionCard>

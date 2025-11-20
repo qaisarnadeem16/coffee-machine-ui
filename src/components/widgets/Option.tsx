@@ -13,13 +13,13 @@ const OptionContainer = styled.div<{ optionShape: number, selected: boolean, has
     position:relative;
     /* padding: ${props => props.hasDescriptionIcon ? '26px' : '10px'} 0px 10px 0; */
     user-select: none;
-    width: 126px;
-    height: 106px;
+    width: 115px;
+    height: 103px;
     border-radius: 10px;
     gap: 2px;
     min-width: 0;
         border: 1px solid #00000033;
-padding: 5px;
+padding: 4px;
     &:hover {
         border-radius: 10px;
         border: 1px solid #00000033;
