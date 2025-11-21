@@ -55,30 +55,27 @@ const BackdropOverlay = styled.div`
 
 // Close button
 const CloseButton = styled.button`
-	position: absolute;
-	top: opx;
-	right: 5px;
-	height:20px;
-	widht:20px;
-	border-radius: 50%;
-	border: none;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 18px;
-	color: #333;
-	z-index: 10;
+  position: fixed;
+  right: 10px;   
+  max-width: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #333;
+  z-index: 10;
 
-	&:hover {
-		background: #e0e0e0;
-	}
+  &:hover {
+    background: #e0e0e0;
+  }
 `;
 
 // Section container
 const SectionContainer = styled.div`
 	margin-bottom: 14px;
-
 `;
 
 // Section title
@@ -105,10 +102,9 @@ const OptionsGrid = styled.div<{ columns?: number }>`
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
-  gap: ${props => (props.columns === 6 ? '6px' : '12px')}; // smaller gap for circles
+  gap: ${props => (props.columns === 6 ? '3px' : '12px')}; // smaller gap for circles
   margin-bottom: 10px;
 `;
-
 
 // Option card
 const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
@@ -122,7 +118,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   align-items: center;
   gap: 8px;
   min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
-  padding: ${props => (props.columns === 6 ? '6px' : `6px`)};
+  padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)};
 
   &:hover {
     border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
@@ -134,7 +130,6 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
     transform: translateY(0);
   }
 `;
-
 
 // Option image container
 const OptionImageContainer = styled.div<{ isRound?: boolean }>`
@@ -160,7 +155,6 @@ const OptionLabel = styled.div`
 	font-weight: 500;
 	color: #333;
 	text-align: center;
-	// line-height: 1.3;
 `;
 
 // Color swatch for color options
@@ -467,9 +461,14 @@ const MobileMenu = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isStartRegistering]);
 
+	// console.log(actualGroups);
+
 	// Render inline full view content (no fixed overlay)
 	const renderFullViewContent = () => {
 		if (!selectedGroup || !showFullView || selectedGroup.id === -2 || selectedGroup.id === -3) return null;
+
+		// Create an array to track attribute indices
+		let attributeCounter = 0;
 
 		return (
 			<FullViewContent>
@@ -480,7 +479,7 @@ const MobileMenu = () => {
 							setSelectedGroupId(null);
 						}}
 					>
-						<svg width="48" height="40" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="70" height="70" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g filter="url(#filter0_d_63_94)">
 								<rect x="13.8999" y="9.90002" width="31" height="31" rx="15.5" fill="white" />
 								<path d="M24.8325 29.9661L33.9672 20.834M24.8325 20.834L33.9672 29.9661" stroke="black" stroke-width="1.5" stroke-linecap="round" />
@@ -498,12 +497,11 @@ const MobileMenu = () => {
 								</filter>
 							</defs>
 						</svg>
-
 					</CloseButton>
 
 					<SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle>
-
 				</div>
+
 				{currentItems.map((item, index) => {
 					if (item instanceof ThemeTemplateGroup) {
 						return (
@@ -517,28 +515,36 @@ const MobileMenu = () => {
 						);
 					} else {
 						const attribute = item;
+						const currentAttributeIndex = attributeCounter;
+						attributeCounter++;
+
+						// Determine columns based on attribute index
+						// Index 0 = 3 columns, Index 1 = 6 columns
+						const columns = currentAttributeIndex === 0 ? 3 : 6;
+						const isRound = currentAttributeIndex === 1;
+
 						return (
 							<SectionContainer key={attribute.id}>
 								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
-								<OptionsGrid columns={attribute.optionShapeType === 2 ? 6 : 3}>
+								<OptionsGrid columns={columns}>
 									{attribute.options.map(option =>
 										option.enabled && (
 											<OptionCard
 												key={option.id}
 												selected={option.selected}
-												isRound={attribute.optionShapeType === 2}
-												columns={attribute.optionShapeType === 2 ? 6 : 3}
+												isRound={isRound}
+												columns={columns}
 												onClick={() => handleOptionSelection(option)}
 											>
 												{option.imageUrl ? (
-													<OptionImageContainer isRound={attribute.optionShapeType === 2}>
+													<OptionImageContainer isRound={isRound}>
 														<img src={option.imageUrl} alt={T._d(option.name)} />
 													</OptionImageContainer>
 												) : (
-													<ColorSwatch isRound={attribute.optionShapeType === 2} />
+													<ColorSwatch isRound={isRound} />
 												)}
 
-												{attribute.optionShapeType !== 2 && (
+												{!isRound && (
 													<OptionLabel>{T._d(option.name)}</OptionLabel>
 												)}
 											</OptionCard>

@@ -44,9 +44,6 @@ export const DesktopRightSidebarContainer = styled.div`
 	justify-content: flex-end;
 	min-height: 0;
 
-
-
-
 	@media (max-width: 1024px) {
 		width: 100%;
 		height: 50%;
@@ -65,10 +62,80 @@ const SliderArrow = styled<React.FC<React.ComponentProps<typeof Icon> & { arrowD
 	${(props) => props.arrowDirection === 'right' && `right: -28px`}
 `;
 
+// Grid container for options - matching mobile design
+const OptionsGrid = styled.div<{ columns?: number }>`
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
+	gap: ${props => (props.columns === 6 ? '6px' : '12px')};
+	margin-bottom: 10px;
+`;
+
+// Option card - matching mobile design
+const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
+	background: white;
+	border: 2px solid ${props => props.selected ? '#A0805A' : '#e0e0e0'};
+	border-radius: ${props => (props.columns === 6 ? '50%' : '12px')};
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
+	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
+	padding: ${props => (props.columns === 6 ? '2.4px' : `6px`)};
+
+	&:hover {
+		border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
+		transform: translateY(-2px);
+		box-shadow: ${props => (props.columns === 6 ? 'none' : '0 4px 12px rgba(160, 128, 90, 0.2)')};
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+`;
+
+// Option image container - matching mobile design
+const OptionImageContainer = styled.div<{ isRound?: boolean }>`
+	width: 45px;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: ${props => props.isRound ? '50%' : '8px'};
+	background: #f8f8f8;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+`;
+
+// Option label - matching mobile design
+const OptionLabel = styled.div`
+	font-size: 10px;
+	font-weight: 500;
+	color: #333;
+	text-align: center;
+`;
+
+// Color swatch for color options - matching mobile design
+const ColorSwatch = styled.div<{ color?: string; isRound?: boolean }>`
+	width: 60px;
+	height: 60px;
+	border-radius: ${props => props.isRound ? '50%' : '8px'};
+	background: ${props => props.color || '#ccc'};
+	border: 1px solid #e0e0e0;
+`;
+
 // This is the right sidebar component for the desktop layout
 // that contains the list of groups, steps, attributes and options.
 const DesktopRightSidebar = () => {
-	const { isSceneLoading, templates, currentTemplate, setCamera, setTemplate, draftCompositions } = useZakeke();
+	const { isSceneLoading, templates, currentTemplate, setCamera, setTemplate, draftCompositions, selectOption } = useZakeke();
 
 	const {
 		setSelectedGroupId,
@@ -115,8 +182,6 @@ const DesktopRightSidebar = () => {
 	const selectedTemplateGroup = currentTemplateGroups
 		? currentTemplateGroups.find((templGr) => templGr.templateGroupID === selectedTemplateGroupId)
 		: null;
-
-	// const [lastSelectedItem, setLastSelectedItem] = useState<{ type: string; id: number }>();
 
 	const undoRegistering = useUndoRegister();
 	const undoRedoActions = useUndoRedoActions();
@@ -252,7 +317,9 @@ const DesktopRightSidebar = () => {
 			setLastSelectedItemsFromGroups(newLastItemSelected);
 		}
 	};
+
 	const setTemplateByID = async (templateID: number) => await setTemplate(templateID);
+
 	// Initial template selection
 	useEffect(() => {
 		if (templates.length > 0 && !currentTemplate) setTemplateByID(templates[0].id);
@@ -418,41 +485,44 @@ const DesktopRightSidebar = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isStartRegistering]);
 
+	// Render options with new grid design
+	const renderOptionsGrid = (attribute: Attribute, attributeIndex: number) => {
+		const columns = attributeIndex === 0 ? 3 : 6;
+		const isRound = attributeIndex === 1;
+
+		return (
+			<OptionsGrid columns={columns}>
+				{attribute.options
+					.filter((x) => x.enabled)
+					.map((option) => (
+						<OptionCard
+							key={option.id}
+							selected={option.selected}
+							isRound={isRound}
+							columns={columns}
+							onClick={() => selectOption(option.id)}
+						>
+							{option.imageUrl ? (
+								<OptionImageContainer isRound={isRound}>
+									<img src={option.imageUrl} alt={T._d(option.name)} />
+								</OptionImageContainer>
+							) : (
+								<ColorSwatch isRound={isRound} />
+							)}
+
+							{!isRound && (
+								<OptionLabel>{T._d(option.name)}</OptionLabel>
+							)}
+						</OptionCard>
+					))}
+			</OptionsGrid>
+		);
+	};
+
 	return (
 		<DesktopRightSidebarContainer>
-			{/* <GroupsContainer>
-				{actualGroups &&
-					!(actualGroups.length === 1 && actualGroups[0].name.toLowerCase() === 'other') &&
-					actualGroups.map((group) => {
-						if (group)
-							return (
-								<GroupItem
-									key={group.guid}
-									className={'group-item' + (group.id === selectedGroupId ? ' selected' : '')}
-									onClick={() => handleGroupSelection(group.id)}
-								>
-									<GroupIcon
-										loading='lazy'
-										// fetchpriority="low"
-										src={
-											group.imageUrl && group.imageUrl !== ''
-												? group.id === -3
-													? savedCompositionsIcon
-													: group.imageUrl
-												: group.id === -2
-													? textIcon
-													: star
-										}
-									/>
-									<span>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
-								</GroupItem>
-							);
-						else return null;
-					})}
-			</GroupsContainer> */}
-
 			<AttributesContainer key={selectedAttributeId}>
-				<TopBar/>
+				<TopBar />
 				<div className="grid lg:grid-cols-3 grid-cols-1 gap-3 py-3 ">
 					{actualGroups &&
 						!(actualGroups.length === 1 && actualGroups[0].name.toLowerCase() === 'other') &&
@@ -466,7 +536,6 @@ const DesktopRightSidebar = () => {
 									>
 										<GroupIcon
 											loading='lazy'
-											// fetchpriority="low"
 											src={
 												group.imageUrl && group.imageUrl !== ''
 													? group.id === -3
@@ -483,104 +552,22 @@ const DesktopRightSidebar = () => {
 							else return null;
 						})}
 				</div>
-				{/* Steps */}
-				{/* {selectedGroup && selectedGroupId !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (
-					<Steps
-						key={'steps-' + selectedGroupId}
-						hasNextGroup={groupIndex !== actualGroups.length - 1}
-						hasPreviousGroup={groupIndex !== 0}
-						onNextStep={handleNextStep}
-						onPreviousStep={handlePreviousStep}
-						currentStep={selectedStep}
-						steps={selectedGroup.steps}
-						onStepChange={handleStepChange}
-					/>
-				)} */}
 
 				{selectedGroupId && selectedGroupId !== -2 && selectedGroupId !== -3 && (
 					<>
 						{/* Attributes */}
 						{selectedGroup?.direction === 0 && (
 							<>
-								{/* <CarouselContainer
-									key={selectedGroupId}
-									slidesToShow={window.innerWidth <= 1600 ? 3 : 4}
-									slideIndex={selectedCarouselSlide}
-									afterSlide={setSelectedCarouselSlide}
-									slidesToScroll={1}
-									speed={50}
-									renderBottomCenterControls={() => <span />}
-									renderCenterRightControls={({ nextSlide, currentSlide, slideCount }) =>
-										currentSlide + (window.innerWidth <= 1600 ? 3 : 4) > slideCount - 1 ? null : (
-											<SliderArrow arrowDirection='right' onClick={nextSlide}>
-												<AngleRightSolid />
-											</SliderArrow>
-										)
-									}
-									renderCenterLeftControls={({ previousSlide, currentSlide, slideCount }) =>
-										currentSlide === 0 ? null : (
-											<SliderArrow arrowDirection='left' onClick={previousSlide}>
-												<AngleLeftSolid />
-											</SliderArrow>
-										)
-									}
-								>
-									{currentItems &&
-										currentItems.map((item) => {
-											if (!(item instanceof ThemeTemplateGroup))
-												return (
-													<ItemContainer
-														selected={item.id === lastSelectedItem?.id}
-														key={item.guid}
-														onClick={() => handleAttributeSelection(item.id)}
-													>
-														<ItemName key={item.name}>
-															{' '}
-															{T._d(item.name.toUpperCase())}{' '}
-														</ItemName>
-														<OptionSelectedName>
-															{item.options.find((opt) => opt.selected)
-																? T._d(item.options.find((opt) => opt.selected)!.name)
-																: ''}
-														</OptionSelectedName>
-													</ItemContainer>
-												);
-											else
-												return (
-													<ItemContainer
-														selected={item.templateGroupID === lastSelectedItem?.id}
-														key={item.templateGroupID}
-														onClick={() =>
-															handleTemplateGroupSelection(item.templateGroupID)
-														}
-													>
-														<ItemName key={item.name}>
-															{T._d(item.name.toUpperCase())}
-														</ItemName>
-													</ItemContainer>
-												);
-										})}
-								</CarouselContainer> */}
-
 								{lastSelectedItem?.type === 'attribute' ? (
 									<>
-										<OptionsContainer key={'options-container'}>
-											<Options key={'option'}>
-												{selectedAttribute &&
-													selectedAttribute.options
-														.filter((x) => x.enabled)
-														.map((option) => (
-															<OptionItem
-																key={option.guid}
-																selectedAttribute={selectedAttribute}
-																option={option}
-																hasDescriptionIcon={selectedAttribute.options.some(
-																	(x) => x.description
-																)}
-															/>
-														))}
-											</Options>
-										</OptionsContainer>
+										{currentAttributes.map((attribute, index) => (
+											<div key={attribute.id}>
+												<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
+													{T._d(attribute.name)}
+												</h2>
+												{renderOptionsGrid(attribute, index)}
+											</div>
+										))}
 										<AttributeDescription>{selectedAttribute?.description}</AttributeDescription>
 									</>
 								) : (
@@ -595,8 +582,16 @@ const DesktopRightSidebar = () => {
 						{selectedGroup?.direction === 1 && (
 							<>
 								{currentItems &&
-									currentItems.map((item) => {
-										if (!(item instanceof ThemeTemplateGroup))
+									currentItems.map((item, itemIndex) => {
+										if (!(item instanceof ThemeTemplateGroup)) {
+											// Calculate attribute index for styling
+											let attributeIndex = 0;
+											for (let i = 0; i < itemIndex; i++) {
+												if (!(currentItems[i] instanceof ThemeTemplateGroup)) {
+													attributeIndex++;
+												}
+											}
+
 											return (
 												<ItemAccordionContainer key={'container' + item.code}>
 													<ItemAccordion
@@ -609,9 +604,8 @@ const DesktopRightSidebar = () => {
 														}
 													>
 														<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
-
 															{T._d(item.name)}
-															</h2>
+														</h2>
 
 														{!selectedGroup.attributesAlwaysOpened && (
 															<ArrowIcon
@@ -622,33 +616,16 @@ const DesktopRightSidebar = () => {
 															/>
 														)}
 													</ItemAccordion>
-													{/* {item.description !== '' && (
-														<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
-															{T._d(item.description)}
-														</h2>
-													)} */}
 
 													{attributesOpened.get(item.id) && (
-														<OptionsContainer>
-															<Options>
-																{item.options
-																	.filter((x) => x.enabled)
-																	.map((option) => (
-																		<OptionItem
-																			key={option.guid}
-																			selectedAttribute={selectedAttribute}
-																			option={option}
-																			hasDescriptionIcon={item.options.some(
-																				(x) => x.description
-																			)}
-																		/>
-																	))}
-															</Options>
-														</OptionsContainer>
+														<>
+															{renderOptionsGrid(item, attributeIndex)}
+														</>
 													)}
 												</ItemAccordionContainer>
 											);
-										else
+										}
+										else {
 											return (
 												<>
 													<ItemAccordionContainer key={'container' + item.templateGroupID}>
@@ -682,6 +659,7 @@ const DesktopRightSidebar = () => {
 													</ItemAccordionContainer>
 												</>
 											);
+										}
 									})}
 							</>
 						)}
