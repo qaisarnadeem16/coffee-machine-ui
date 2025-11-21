@@ -117,7 +117,8 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
+  height: ${props => (props.columns === 6 ? '55px' : `80px`)};
+  width: ${props => (props.columns === 6 ? '55px' : `100%`)};
   padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)};
 
   &:hover {
