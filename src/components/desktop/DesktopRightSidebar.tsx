@@ -81,6 +81,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content:center;
 	gap: 8px;
 	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
 	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
@@ -485,37 +486,46 @@ const DesktopRightSidebar = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isStartRegistering]);
 
-	// Render options with new grid design
+	
+	const getSelectedOptionName = (attribute: Attribute) => {
+		const selected = attribute.options.find(opt => opt.selected);
+		return selected ? T._d(selected.name) : null;
+	};
+
 	const renderOptionsGrid = (attribute: Attribute, attributeIndex: number) => {
 		const columns = attributeIndex === 0 ? 3 : 6;
 		const isRound = attributeIndex === 1;
 
 		return (
-			<OptionsGrid columns={columns}>
-				{attribute.options
-					.filter((x) => x.enabled)
-					.map((option) => (
-						<OptionCard
-							key={option.id}
-							selected={option.selected}
-							isRound={isRound}
-							columns={columns}
-							onClick={() => selectOption(option.id)}
-						>
-							{option.imageUrl ? (
-								<OptionImageContainer isRound={isRound}>
-									<img src={option.imageUrl} alt={T._d(option.name)} />
-								</OptionImageContainer>
-							) : (
-								<ColorSwatch isRound={isRound} />
-							)}
+			<>
+				{getSelectedOptionName(attribute) && (
+					<p className="text-sm text-[#000] font-medium mb-2">
+						Selected Options: <span className='text-base text-[#A0805A] font-semibold'>{getSelectedOptionName(attribute)}</span>
+					</p>
+				)}
 
-							{!isRound && (
-								<OptionLabel>{T._d(option.name)}</OptionLabel>
-							)}
-						</OptionCard>
-					))}
-			</OptionsGrid>
+				<OptionsGrid columns={columns}>
+					{attribute.options
+						.filter(x => x.enabled)
+						.map(option => (
+							<OptionCard
+								key={option.id}
+								selected={option.selected}
+								isRound={isRound}
+								columns={columns}
+								onClick={() => selectOption(option.id)}
+							>
+								{option.imageUrl ? (
+									<OptionImageContainer isRound={isRound}>
+										<img src={option.imageUrl} alt={T._d(option.name)} />
+									</OptionImageContainer>
+								) : (
+									<ColorSwatch isRound={isRound} />
+								)}
+							</OptionCard>
+						))}
+				</OptionsGrid>
+			</>
 		);
 	};
 
@@ -529,25 +539,28 @@ const DesktopRightSidebar = () => {
 						actualGroups.map((group) => {
 							if (group)
 								return (
-									<GroupItem
-										key={group.guid}
-										className={'group-item' + (group.id === selectedGroupId ? ' selected' : '')}
-										onClick={() => handleGroupSelection(group.id)}
-									>
-										<GroupIcon
-											loading='lazy'
-											src={
-												group.imageUrl && group.imageUrl !== ''
-													? group.id === -3
-														? savedCompositionsIcon
-														: group.imageUrl
-													: group.id === -2
-														? textIcon
-														: star
-											}
-										/>
-										<span className={`font-medium text-sm ${group.id === selectedGroupId ? 'text-white ' : 'text-[#000000B2]'}`}>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
-									</GroupItem>
+									<div className="flex flex-col items-center text-black">
+										<GroupItem
+											key={group.guid}
+											className={'group-item' + (group.id === selectedGroupId ? ' selected' : '')}
+											onClick={() => handleGroupSelection(group.id)}
+										>
+											<GroupIcon
+												loading='lazy'
+												src={
+													group.imageUrl && group.imageUrl !== ''
+														? group.id === -3
+															? savedCompositionsIcon
+															: group.imageUrl
+														: group.id === -2
+															? textIcon
+															: star
+												}
+											/>
+										</GroupItem>
+										<span className={`font-medium text-sm ${group.id === selectedGroupId ? 'text-[#000] ' : 'text-[#000000B2]'}`}>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
+									</div>
+
 								);
 							else return null;
 						})}
@@ -603,7 +616,7 @@ const DesktopRightSidebar = () => {
 																: () => handleAttributeSelection(item.id, true)
 														}
 													>
-														<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
+														<h2 className='text-lg font-medium text-black pt-3 mt-5 border-t-2 border-primary'>
 															{T._d(item.name)}
 														</h2>
 

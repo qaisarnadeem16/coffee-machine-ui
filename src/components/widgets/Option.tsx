@@ -105,23 +105,28 @@ const OptionItem: FC<{ selectedAttribute: Attribute | null | undefined, option: 
         } catch (e) { }
     }
 
-    return <OptionContainer
-        hasDescriptionIcon={hasDescriptionIcon}
-        selected={option.selected}
-        optionShape={option.attribute.optionShapeType}
-        onClick={() => handleOptionSelection(option)}>
+    return (
+        <div className="flex flex-col items-center">
+            <OptionContainer
+                hasDescriptionIcon={hasDescriptionIcon}
+                selected={option.selected}
+                optionShape={option.attribute.optionShapeType}
+                onClick={() => handleOptionSelection(option)}>
 
-        <OptionIconContainer>
-            {/* {option.description && option.description.length !== 0 &&
+                <OptionIconContainer>
+                    {/* {option.description && option.description.length !== 0 &&
                 <Tooltip key={"tooltip" + option.guid} optionDescription={option.description} />
             } */}
-            {option.imageUrl && <OptIconContainer><OptionIcon loading="lazy" 
-            // fetchpriority="low" 
-            src={option.imageUrl ?? ""} optionShape={option.attribute.optionShapeType === 2} /></OptIconContainer>}
-        </OptionIconContainer>
+                    {option.imageUrl && <OptIconContainer><OptionIcon loading="lazy"
+                        // fetchpriority="low" 
+                        src={option.imageUrl ?? ""} optionShape={option.attribute.optionShapeType === 2} /></OptIconContainer>}
+                </OptionIconContainer>
 
-        {!option.attribute.hideOptionsLabel && <OptionName >{T._d(option.name)}</OptionName>}
-    </OptionContainer>;
+
+            </OptionContainer>
+            {/* {!option.attribute.hideOptionsLabel && <OptionName >{T._d(option.name)}</OptionName>} */}
+        </div>
+    )
 }
 
 export default OptionItem;

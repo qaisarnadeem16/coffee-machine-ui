@@ -18,13 +18,13 @@ const TopBarContainer = styled.div`
 `;
 
 const PriceBox = styled.div`
-  border: 1.5px solid #A0805A;
-  border-radius: 9999px;
-  padding: 7px 24px;
+//   border: 1.5px solid #A0805A;
+//   border-radius: 9999px;
+//   padding: 7px 24px;
   font-size: 18px;
   font-weight: 600;
   color: #000;
-  background-color: #fff;
+//   background-color: #fff;
 `;
 
 const AddToCartButton = styled(Button)`
