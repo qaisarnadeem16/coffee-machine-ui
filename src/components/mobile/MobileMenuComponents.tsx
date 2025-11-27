@@ -76,13 +76,13 @@ export const MenuItemImagesImageWrapper = styled.div`
 // Styled component for the label of each menu item
 export const MenuItemLabel = styled.span<{ selected?: boolean }>`
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 500;
 	text-align: center;
-	overflow: hidden;
+	// overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	// white-space: nowrap;
 	width: 100%;
-	color: ${(props) => (props.selected ? '#ffffff' : '#333333')};
+	color: ${(props) => (props.selected ? '#333333' : '#333333')};
 `;
 
 // Styled component for each image in the menu item
@@ -167,9 +167,9 @@ const MenuItemsWrapper = styled.div`
 		display: none;
 	}
 
-	span {
-		font-size: 16px;
-	}
+	// span {
+	// 	font-size: 16px;
+	// }
 `;
 
 // Styled component for the left arrow
@@ -315,8 +315,8 @@ export const MenuItem: FC<MenuItemProps> = (props) => {
 						))}
 					</MenuItemImagesWrapper>
 				)}
-				{!props.hideLabel && <MenuItemLabel selected={props.selected}>{props.label}</MenuItemLabel>}
 			</MenuItemCard>
+			{!props.hideLabel && <MenuItemLabel selected={props.selected}>{props.label}</MenuItemLabel>}
 		</MobileItemContainer>
 	);
 };

@@ -68,7 +68,15 @@ const OptionsGrid = styled.div<{ columns?: number }>`
 	justify-content: center;
 	grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
 	gap: ${props => (props.columns === 6 ? '6px' : '12px')};
-	margin-bottom: 10px;
+	padding:10px 0px;
+`;
+
+// Option card wrapper to include image and label
+const OptionCardWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
 `;
 
 // Option card - matching mobile design
@@ -116,12 +124,15 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 	}
 `;
 
-// Option label - matching mobile design
-const OptionLabel = styled.div`
-	font-size: 10px;
+// Option label - matching mobile design - UPDATED to show outside the card
+const OptionLabel = styled.div<{ columns?: number }>`
+	font-size: ${props => (props.columns === 3 ? '12px' : '10px')};
 	font-weight: 500;
 	color: #333;
 	text-align: center;
+	line-height: 1.3;
+	max-width: ${props => (props.columns === 3 ? '100px' : '60px')};
+	word-wrap: break-word;
 `;
 
 // Color swatch for color options - matching mobile design
@@ -495,10 +506,11 @@ const DesktopRightSidebar = () => {
 	const renderOptionsGrid = (attribute: Attribute, attributeIndex: number) => {
 		const columns = attributeIndex === 0 ? 3 : 6;
 		const isRound = attributeIndex === 1;
+		const showOptionNames = columns === 3; // Only show names for 3-column (square) layout
 
 		return (
 			<>
-				{getSelectedOptionName(attribute) && (
+				{!showOptionNames && getSelectedOptionName(attribute) && (
 					<p className="text-sm text-[#000] font-medium mb-2">
 						Selected Options: <span className='text-base text-[#A0805A] font-semibold'>{getSelectedOptionName(attribute)}</span>
 					</p>
@@ -508,21 +520,23 @@ const DesktopRightSidebar = () => {
 					{attribute.options
 						.filter(x => x.enabled)
 						.map(option => (
-							<OptionCard
-								key={option.id}
-								selected={option.selected}
-								isRound={isRound}
-								columns={columns}
-								onClick={() => selectOption(option.id)}
-							>
-								{option.imageUrl ? (
-									<OptionImageContainer isRound={isRound}>
-										<img src={option.imageUrl} alt={T._d(option.name)} />
-									</OptionImageContainer>
-								) : (
-									<ColorSwatch isRound={isRound} />
-								)}
-							</OptionCard>
+							<OptionCardWrapper key={option.id}>
+								<OptionCard
+									selected={option.selected}
+									isRound={isRound}
+									columns={columns}
+									onClick={() => selectOption(option.id)}
+								>
+									{option.imageUrl ? (
+										<OptionImageContainer isRound={isRound}>
+											<img src={option.imageUrl} alt={T._d(option.name)} />
+										</OptionImageContainer>
+									) : (
+										<ColorSwatch isRound={isRound} />
+									)}
+								</OptionCard>
+								{showOptionNames && <OptionLabel columns={columns}>{T._d(option.name)}</OptionLabel>}
+							</OptionCardWrapper>
 						))}
 				</OptionsGrid>
 			</>

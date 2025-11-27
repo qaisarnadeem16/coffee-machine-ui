@@ -21,8 +21,8 @@ const PriceBox = styled.div`
 //   border: 1.5px solid #A0805A;
 //   border-radius: 9999px;
   padding: 7px 24px;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 400;
   color: #000;
 //   background-color: #fff;
 `;
@@ -62,9 +62,9 @@ const TopBar = () => {
         <TopBarContainer>
             {/* Price */}
             <div className="">
-                {price !== null && price > 0 && (
+                {/* {price !== null && price > 0 && ( */}
                     <PriceBox>{priceFormatter.format(price)}</PriceBox>
-                )}
+                {/* )} */}
             </div>
 
             {/* Add to Cart */}

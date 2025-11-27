@@ -97,6 +97,19 @@ const SectionSubtitle = styled.div`
 	letter-spacing: 0.5px;
 `;
 
+// Selected option display for circle options
+const SelectedOptionDisplay = styled.div`
+	font-size: 11px;
+	color: #000;
+	font-weight: 500;
+	margin-bottom: 8px;
+	
+	span {
+		color: #A0805A;
+		font-weight: 700;
+	}
+`;
+
 // Grid container for options
 const OptionsGrid = styled.div<{ columns?: number }>`
   display: grid;
@@ -104,6 +117,14 @@ const OptionsGrid = styled.div<{ columns?: number }>`
   grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
   gap: ${props => (props.columns === 6 ? '3px' : '12px')}; // smaller gap for circles
   margin-bottom: 10px;
+`;
+
+// Option card wrapper to include image and label
+const OptionCardWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
 `;
 
 // Option card
@@ -150,12 +171,15 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 	}
 `;
 
-// Option label
-const OptionLabel = styled.div`
-	font-size: 10px;
+// Option label - updated to accept columns prop
+const OptionLabel = styled.div<{ columns?: number }>`
+	font-size: ${props => (props.columns === 3 ? '12px' : '9px')};
 	font-weight: 500;
 	color: #333;
 	text-align: center;
+	line-height: 1.2;
+	max-width: ${props => (props.columns === 3 ? '90px' : '55px')};
+	word-wrap: break-word;
 `;
 
 // Color swatch for color options
@@ -462,7 +486,11 @@ const MobileMenu = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isStartRegistering]);
 
-	// console.log(actualGroups);
+	// Helper function to get selected option name
+	const getSelectedOptionName = (options: Option[]) => {
+		const selected = options.find(opt => opt.selected);
+		return selected ? T._d(selected.name) : null;
+	};
 
 	// Render inline full view content (no fixed overlay)
 	const renderFullViewContent = () => {
@@ -473,7 +501,7 @@ const MobileMenu = () => {
 
 		return (
 			<FullViewContent>
-				<div className="flex items-center">
+				<div className="flex items-center py-1">
 					<CloseButton
 						onClick={() => {
 							setShowFullView(false);
@@ -509,7 +537,6 @@ const MobileMenu = () => {
 							<SectionContainer key={item.templateGroupID}>
 								<SectionSubtitle>{T._d(item.name)}</SectionSubtitle>
 								<OptionsGrid columns={3}>
-									{/* Template group items would go here */}
 								</OptionsGrid>
 								{index < currentItems.length - 1 && <Separator />}
 							</SectionContainer>
@@ -523,32 +550,42 @@ const MobileMenu = () => {
 						// Index 0 = 3 columns, Index 1 = 6 columns
 						const columns = currentAttributeIndex === 0 ? 3 : 6;
 						const isRound = currentAttributeIndex === 1;
+						const showOptionNames = columns === 3; // Only show individual names for 3-column layout
+						const selectedOptionName = getSelectedOptionName(attribute.options);
 
 						return (
 							<SectionContainer key={attribute.id}>
-								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
+								{/* <SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle> */}
+
+								{!showOptionNames && selectedOptionName && (
+									<SelectedOptionDisplay>
+										Selected Option: <span>{selectedOptionName}</span>
+									</SelectedOptionDisplay>
+								)}
+
 								<OptionsGrid columns={columns}>
 									{attribute.options.map(option =>
 										option.enabled && (
-											<OptionCard
-												key={option.id}
-												selected={option.selected}
-												isRound={isRound}
-												columns={columns}
-												onClick={() => handleOptionSelection(option)}
-											>
-												{option.imageUrl ? (
-													<OptionImageContainer isRound={isRound}>
-														<img src={option.imageUrl} alt={T._d(option.name)} />
-													</OptionImageContainer>
-												) : (
-													<ColorSwatch isRound={isRound} />
-												)}
+											<OptionCardWrapper key={option.id}>
+												<OptionCard
+													selected={option.selected}
+													isRound={isRound}
+													columns={columns}
+													onClick={() => handleOptionSelection(option)}
+												>
+													{option.imageUrl ? (
+														<OptionImageContainer isRound={isRound}>
+															<img src={option.imageUrl} alt={T._d(option.name)} />
+														</OptionImageContainer>
+													) : (
+														<ColorSwatch isRound={isRound} />
+													)}
+												</OptionCard>
 
-												{!isRound && (
-													<OptionLabel>{T._d(option.name)}</OptionLabel>
+												{showOptionNames && (
+													<OptionLabel columns={columns}>{T._d(option.name)}</OptionLabel>
 												)}
-											</OptionCard>
+											</OptionCardWrapper>
 										)
 									)}
 								</OptionsGrid>
@@ -567,7 +604,6 @@ const MobileMenu = () => {
 				<PriceInfoTextContainer dangerouslySetInnerHTML={{ __html: sellerSettings.priceInfoText }} />
 			)}
 
-			{/* Always show MobileItemsContainer for group selection, with active state */}
 			<MobileItemsContainer
 				isLeftArrowVisible
 				isRightArrowVisible
@@ -591,7 +627,6 @@ const MobileMenu = () => {
 				})}
 			</MobileItemsContainer>
 
-			{/* Steps container, shown when group selected and has steps */}
 			{selectedGroup && selectedGroup.id !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (
 				<StepsMobileContainer>
 					<Steps
@@ -607,7 +642,6 @@ const MobileMenu = () => {
 				</StepsMobileContainer>
 			)}
 
-			{/* Templates selection for special group -2 */}
 			{selectedGroup && selectedGroup.id === -2 && templates.length > 1 && (
 				<TemplatesContainer>
 					{templates.map((template) => (
@@ -624,10 +658,8 @@ const MobileMenu = () => {
 				</TemplatesContainer>
 			)}
 
-			{/* Inline full view content for regular groups */}
 			{renderFullViewContent()}
 
-			{/* Designer / Customizer for special group -2 */}
 			{selectedGroup?.id === -2 && isTemplateEditorOpened && (
 				<Designer
 					onCloseClick={() => {
@@ -637,7 +669,6 @@ const MobileMenu = () => {
 				/>
 			)}
 
-			{/* Saved Compositions for special group -3 */}
 			{draftCompositions && selectedGroup?.id === -3 && isDesignsDraftListOpened && (
 				<DesignsDraftList
 					onCloseClick={() => {
