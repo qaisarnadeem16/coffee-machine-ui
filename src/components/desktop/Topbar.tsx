@@ -62,9 +62,9 @@ const TopBar = () => {
         <TopBarContainer>
             {/* Price */}
             <div className="">
-                {/* {price !== null && price > 0 && ( */}
+                {price !== null && price > 0 && (
                     <PriceBox>{priceFormatter.format(price)}</PriceBox>
-                {/* )} */}
+                )}
             </div>
 
             {/* Add to Cart */}
