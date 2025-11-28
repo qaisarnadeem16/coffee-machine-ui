@@ -38,7 +38,7 @@ export const GroupItem = styled.div`
 	margin-top: 20px;
 	text-align: center;
 	cursor: pointer;
-	padding: 10px;
+	padding: 5px;
 	gap: 10px;
 border: 2px solid #A0805A;
 border-radius: 12px;
@@ -70,9 +70,9 @@ border-radius: 12px;
 `;
 
 export const GroupIcon = styled.img`
-	width: 88px;
-	height: 70px;
-	object-fit: contain;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 	margin-bottom: 5px;
 	border-radius: 10px;
 	

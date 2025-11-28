@@ -93,7 +93,8 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 	gap: 8px;
 	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
 	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
-	padding: ${props => (props.columns === 6 ? '2.4px' : `6px`)};
+	padding: ${props => (props.columns === 6 ? '2.4px' : `1px`)};
+	background: #f8f8f8;
 
 	&:hover {
 		border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
@@ -108,8 +109,8 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 
 // Option image container - matching mobile design
 const OptionImageContainer = styled.div<{ isRound?: boolean }>`
-	width: 45px;
-	height: 45px;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
