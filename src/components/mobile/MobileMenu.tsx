@@ -146,6 +146,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  position: relative;
   /* height: ${props => (props.columns === 6 ? '55px' : `80px`)}; */
   /* width: ${props => (props.columns === 6 ? '55px' : `100%`)}; */
   /* padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)}; */
@@ -225,6 +226,23 @@ const FullViewContent = styled.div`
 	box-shadow: 0px 4px 29.4px 0px #A0805A;
 	margin-bottom: 105px;
 `;
+
+const CheckBox = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border-radius: 5px;
+  width: 16px;
+  height: 16px;
+  z-index: 5;
+background-color: white;
+`;
+
+const CheckIcon = styled.svg`
+
+  fill: #A0805A; /* or any color you want */
+`;
+
 
 // MobileMenu component that represents the mobile menu where
 // the customer can select the attributes and options
@@ -450,13 +468,17 @@ const MobileMenu = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedGroup?.id]);
-	// Auto select first actualGroup on load
-	useEffect(() => {
-		if (actualGroups.length > 0 && !selectedGroupId) {
-			const firstGroup = actualGroups[0];
-			handleGroupSelection(firstGroup.id);
-		}
-	}, [actualGroups]);
+// Auto select first actualGroup on load
+useEffect(() => {
+    if (actualGroups.length > 0 && !selectedGroupId) {
+        const firstGroup = actualGroups[0];
+		console.log(firstGroup)
+        handleGroupSelection(firstGroup.id);
+		handleOptionSelection(firstGroup?.attributes[0]?.options[0])
+    }
+}, [actualGroups]);
+
+
 
 	useEffect(() => {
 		if (selectedGroup?.id === -2) {
@@ -588,6 +610,13 @@ const MobileMenu = () => {
 													columns={columns}
 													onClick={() => handleOptionSelection(option)}
 												>
+													{option.selected && (
+														<CheckBox className="">
+															<CheckIcon viewBox="0 0 24 24">
+																<path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.21-4.192-4.192a1 1 0 0 0-1.414 1.414l4.9 4.9a1 1 0 0 0 1.414 0l9.908-9.914z" />
+															</CheckIcon>
+														</CheckBox>
+													)}
 													{option.imageUrl ? (
 														<OptionImageContainer isRound={isRound}>
 															<img src={option.imageUrl} alt={T._d(option.name)} />
