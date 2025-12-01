@@ -475,7 +475,7 @@ const DesktopRightSidebar = () => {
 		}, 500); // 10000 ms = 10 seconds
 
 		return () => clearTimeout(timer); // cleanup if component unmounts
-	}, [isSceneLoading,actualGroups]);
+	}, [isSceneLoading]);
 
 	// Camera for groups
 	useEffect(() => {
