@@ -458,6 +458,25 @@ const DesktopRightSidebar = () => {
 // 		// }
 //     }
 // }, [actualGroups]);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (actualGroups.length > 0 && !isSceneLoading) {
+				const firstGroup = actualGroups[0];
+				handleGroupSelection(firstGroup.id);
+
+				const firstOption = firstGroup?.attributes?.[0]?.options?.[0];
+				if (firstOption) {
+					handleOptionSelection(firstOption);
+				}
+
+				
+			}
+		}, 500); // 10000 ms = 10 seconds
+
+		return () => clearTimeout(timer); // cleanup if component unmounts
+	}, [isSceneLoading,actualGroups]);
+
 	// Camera for groups
 	useEffect(() => {
 		if (!isSceneLoading && selectedGroup && selectedGroup.cameraLocationId) {
