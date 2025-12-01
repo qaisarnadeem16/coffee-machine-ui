@@ -11,12 +11,12 @@ import noImage from '../../assets/images/no_image.png';
 export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 	align-items: center;
 	justify-content: center;
-	min-width: 120px;
-	max-width: 120px;
-	width: 120px;
-	height: 120px;
-	min-height: 120px;
-	max-height: 120px;
+	min-width: 100px;
+	max-width: 100px;
+	width: 100px;
+	height: 100px;
+	min-height: 100px;
+	max-height: 100px;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -29,14 +29,14 @@ export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 // Inner card wrapper for the menu item
 export const MenuItemCard = styled.div<{ selected?: boolean }>`
 	width: 100%;
-	height: 100%;
+	height: 80px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	border: 2px solid #A0805A;
 	border-radius: 12px;
-	padding: 5px 5px;
+	padding: 1px 1px;
 	background-color: ${(props) => (props.selected ? '#A0805A' : '#ffffff')};
 	transition: all 0.2s ease;
 	position: relative;
@@ -49,10 +49,10 @@ export const MenuItemCard = styled.div<{ selected?: boolean }>`
 
 // Styled component for the image of each menu item
 export const MenuItemImage = styled.img<{ isRound?: boolean; selected?: boolean }>`
-	width: 55px;
-	height: 55px;
-	object-fit: ${(props) => (props.isRound ? 'cover' : 'cover')};
-	margin-bottom: 8px;
+	width:100%;
+	height: 100%;
+	object-fit: cover;
+	margin-bottom: 2px;
 	border-radius: ${(props) => (props.isRound ? '50%' : '6px')};
 	// filter: ${(props) => (props.selected ? 'brightness(0) invert(1)' : 'none')};
 `;
@@ -282,9 +282,9 @@ export const MobileItemsContainer: FC<MenuItemsContainerProps> = ({
 export const MenuItem: FC<MenuItemProps> = (props) => {
 	return (
 		<MobileItemContainer onClick={props.onClick} selected={props.selected}>
-			{props.description && props.description.length !== 0 && (
+			{/* {props.description && props.description.length !== 0 && (
 				<Tooltip optionDescription={props.description} $isMobile />
-			)}
+			)} */}
 			<MenuItemCard selected={props.selected}>
 				{props.imageUrl && (
 					<MenuItemImage

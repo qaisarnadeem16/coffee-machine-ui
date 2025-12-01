@@ -75,7 +75,7 @@ const CloseButton = styled.button`
 
 // Section container
 const SectionContainer = styled.div`
-	margin-bottom: 14px;
+	margin-bottom: 15px;
 `;
 
 // Section title
@@ -112,15 +112,23 @@ const SelectedOptionDisplay = styled.div`
 
 // Grid container for options
 const OptionsGrid = styled.div<{ columns?: number }>`
-  display: grid;
+
+	width: 100%;
+	display: flex;
+	overflow-x: auto;
+	margin-bottom: 10px;
+  /* display: grid;
   justify-content: center;
-  grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
+
+  grid-template-columns: repeat(${props => props.columns || 3}, 1fr); */
   gap: ${props => (props.columns === 6 ? '3px' : '12px')}; // smaller gap for circles
   margin-bottom: 10px;
 `;
 
 // Option card wrapper to include image and label
 const OptionCardWrapper = styled.div`
+/* width: 100px;
+height: 100px; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -138,9 +146,9 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  height: ${props => (props.columns === 6 ? '55px' : `80px`)};
-  width: ${props => (props.columns === 6 ? '55px' : `100%`)};
-  padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)};
+  /* height: ${props => (props.columns === 6 ? '55px' : `80px`)}; */
+  /* width: ${props => (props.columns === 6 ? '55px' : `100%`)}; */
+  /* padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)}; */
 
   &:hover {
     border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
@@ -528,7 +536,7 @@ const MobileMenu = () => {
 						</svg>
 					</CloseButton>
 
-					<SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle>
+					{/* <SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle> */}
 				</div>
 
 				{currentItems.map((item, index) => {
