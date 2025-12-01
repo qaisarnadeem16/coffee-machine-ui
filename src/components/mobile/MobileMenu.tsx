@@ -67,10 +67,10 @@ const CloseButton = styled.button`
   font-size: 18px;
   color: #333;
   z-index: 10;
-
+/* 
   &:hover {
     background: #e0e0e0;
-  }
+  } */
 `;
 
 // Section container
@@ -147,6 +147,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   align-items: center;
   gap: 8px;
   position: relative;
+  margin: 5px 0;
   /* height: ${props => (props.columns === 6 ? '55px' : `80px`)}; */
   /* width: ${props => (props.columns === 6 ? '55px' : `100%`)}; */
   /* padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)}; */
@@ -229,8 +230,8 @@ const FullViewContent = styled.div`
 
 const CheckBox = styled.div`
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 2%.5;
+  right: 2.5px;
   border-radius: 5px;
   width: 16px;
   height: 16px;
@@ -476,7 +477,7 @@ useEffect(() => {
         handleGroupSelection(firstGroup.id);
 		handleOptionSelection(firstGroup?.attributes[0]?.options[0])
     }
-}, [actualGroups]);
+}, []);
 
 
 

@@ -1,4 +1,4 @@
-import { Attribute, Step, ThemeTemplateGroup } from '@zakeke/zakeke-configurator-react';
+import { Attribute, Option, Step, ThemeTemplateGroup } from '@zakeke/zakeke-configurator-react';
 import { ReactComponent as AngleLeftSolid } from '../../assets/icons/angle-left-solid.svg';
 import { ReactComponent as AngleRightSolid } from '../../assets/icons/angle-right-solid.svg';
 import textIcon from '../../assets/icons/font-solid.svg';
@@ -426,6 +426,38 @@ const DesktopRightSidebar = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [actualGroups]);
 
+
+	const options = selectedAttribute?.options ?? [];
+
+		const handleOptionSelection = (option: Option) => {
+			const undo = undoRegistering.startRegistering();
+			undoRedoActions.eraseRedoStack();
+			undoRedoActions.fillUndoStack({
+				type: 'option',
+				id: options.find((opt) => opt.selected)?.id ?? null,
+				direction: 'undo'
+			});
+			undoRedoActions.fillUndoStack({ type: 'option', id: option.id, direction: 'redo' });
+	
+			selectOption(option.id);
+			undoRegistering.endRegistering(undo);
+	
+			try {
+				if ((window as any).algho) (window as any).algho.sendUserStopForm(true);
+			} catch (e) { }
+		};
+	
+// useEffect(() => {
+//     if (actualGroups.length > 0 && !selectedGroupId) {
+//         const firstGroup = actualGroups[0];
+// 		console.log(firstGroup)
+//         handleGroupSelection(firstGroup.id);
+// 		handleOptionSelection(firstGroup?.attributes[0]?.options[0])
+// 		// if (firstGroup?.attributes[1]?.cameraLocationId) {
+// 		// 	setCamera(firstGroup?.cameraLocationId);
+// 		// }
+//     }
+// }, [actualGroups]);
 	// Camera for groups
 	useEffect(() => {
 		if (!isSceneLoading && selectedGroup && selectedGroup.cameraLocationId) {
