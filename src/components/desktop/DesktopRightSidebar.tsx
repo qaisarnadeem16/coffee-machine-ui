@@ -461,9 +461,9 @@ const DesktopRightSidebar = () => {
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			if (actualGroups.length > 0 && !isSceneLoading) {
+			if (actualGroups.length > 0 && !isSceneLoading ) {
 				const firstGroup = actualGroups[0];
-				handleGroupSelection(firstGroup.id);
+				// handleGroupSelection(firstGroup.id);
 
 				const firstOption = firstGroup?.attributes?.[0]?.options?.[0];
 				if (firstOption) {
