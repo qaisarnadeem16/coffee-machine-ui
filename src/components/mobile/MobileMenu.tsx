@@ -450,6 +450,13 @@ const MobileMenu = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedGroup?.id]);
+	// Auto select first actualGroup on load
+	useEffect(() => {
+		if (actualGroups.length > 0 && !selectedGroupId) {
+			const firstGroup = actualGroups[0];
+			handleGroupSelection(firstGroup.id);
+		}
+	}, [actualGroups]);
 
 	useEffect(() => {
 		if (selectedGroup?.id === -2) {
