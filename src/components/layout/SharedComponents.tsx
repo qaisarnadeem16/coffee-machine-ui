@@ -32,22 +32,26 @@ export const GroupItem = styled.div`
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
-	height: 121px;
+	height: 144px;
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	margin-top: 20px;
 	text-align: center;
 	cursor: pointer;
-	padding: 5px;
+	// padding: 5px;
 	gap: 10px;
-border: 2px solid #A0805A;
-border-radius: 12px;
+// border: 3px solid #CDA26E;
+border-radius: 2px;
 	&:hover {
-		background-color: #A0805A;
+		// background-color: #CDA26E;
+border: 3px solid #CDA26E;
+
 	}
 
 	&.selected {
-		background-color: #A0805A;
+		// background-color: #CDA26E;
+border: 3px solid #CDA26E;
+
 	}
 
 	span {
@@ -73,8 +77,8 @@ export const GroupIcon = styled.img`
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	margin-bottom: 5px;
-	border-radius: 10px;
+	// margin-bottom: 5px;
+	border-radius: 2px;
 	
     /* max-width: 40%; */
 `;
@@ -87,13 +91,13 @@ export const GroupStar = styled(Icon)`
 export const AttributesContainer = styled.div`
 	/* background-color: white; */
 	flex: 1;
-	padding: 40px;
+	padding: 20px;
 	min-height: 0;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
-		background: #EEEEEE;
-box-shadow: 0px 0px 9.4px 2px #A0805A;
+		// background: #EEEEEE;
+// box-shadow: 0px 0px 9.4px 2px #A0805A;
 
 
 	@media (max-width: 1024px) {
@@ -208,7 +212,8 @@ export const Template = styled.div<{ selected?: boolean }>`
 export const ViewerContainer = styled.div`
 	position: relative;
 	min-height: 0;
-	padding: 40px 60px;
+	// padding: 40px 60px;
+	padding: 5px;
 	
 	@media (max-width: 1024px) {
 		padding: 0px 10px 15px;

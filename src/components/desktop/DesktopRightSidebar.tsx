@@ -82,8 +82,8 @@ const OptionCardWrapper = styled.div`
 // Option card - matching mobile design
 const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
 	background: white;
-	border: 2px solid ${props => props.selected ? '#A0805A' : '#e0e0e0'};
-	border-radius: ${props => (props.columns === 6 ? '50%' : '12px')};
+	border: 3px solid ${props => props.selected ? '#CDA26E' : '#ffff'};
+	border-radius: ${props => (props.columns === 6 ? '50%' : '2px')};
 	cursor: pointer;
 	transition: all 0.2s ease;
 	display: flex;
@@ -93,7 +93,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 	gap: 8px;
 	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
 	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
-	padding: ${props => (props.columns === 6 ? '2.4px' : `1px`)};
+	padding: ${props => (props.columns === 6 ? '2.4px' : `0px`)};
 	background: #f8f8f8;
 
 	&:hover {
@@ -115,7 +115,7 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
-	border-radius: ${props => props.isRound ? '50%' : '8px'};
+	border-radius: ${props => props.isRound ? '50%' : '2px'};
 	background: #f8f8f8;
 
 	img {
@@ -128,7 +128,7 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 // Option label - matching mobile design - UPDATED to show outside the card
 const OptionLabel = styled.div<{ columns?: number }>`
 	font-size: ${props => (props.columns === 3 ? '12px' : '10px')};
-	font-weight: 500;
+	font-weight: 700;
 	color: #333;
 	text-align: center;
 	line-height: 1.3;
@@ -563,8 +563,8 @@ const DesktopRightSidebar = () => {
 		return (
 			<>
 				{!showOptionNames && getSelectedOptionName(attribute) && (
-					<p className="text-sm text-[#000] font-medium mb-2">
-						Selected Options: <span className='text-base text-[#A0805A] font-semibold'>{getSelectedOptionName(attribute)}</span>
+					<p className="text-sm text-[#000] font-semibold mb-2">
+						Selected Options: <span className='text-base text-[#CDA26E] font-semibold'>{getSelectedOptionName(attribute)}</span>
 					</p>
 				)}
 
@@ -624,7 +624,7 @@ const DesktopRightSidebar = () => {
 												}
 											/>
 										</GroupItem>
-										<span className={`font-medium text-sm ${group.id === selectedGroupId ? 'text-[#000] ' : 'text-[#000000B2]'}`}>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
+										<span className={`font-bold text-sm ${group.id === selectedGroupId ? 'text-[#121715] ' : 'text-[#000000B2]'}`}>{group.name ? T._d(group.name) : T._('Customize', 'Composer')}</span>
 									</div>
 
 								);
@@ -641,7 +641,7 @@ const DesktopRightSidebar = () => {
 									<>
 										{currentAttributes.map((attribute, index) => (
 											<div key={attribute.id}>
-												<h2 className='text-lg font-medium text-black py-3 mt-5 border-t-2 border-primary'>
+												<h2 className='text-lg lg:text-2xl font-bold text-black py-3 mt-5 border-t-2 border-primary'>
 													{T._d(attribute.name)}
 												</h2>
 												{renderOptionsGrid(attribute, index)}
@@ -682,7 +682,7 @@ const DesktopRightSidebar = () => {
 																: () => handleAttributeSelection(item.id, true)
 														}
 													>
-														<h2 className='text-lg font-medium text-black pt-3 mt-5 border-t-2 border-primary'>
+														<h2 className='text-lg lg:text-2xl font-bold uppercase text-black pt-3 mt-5 border-t-2 border-primary'>
 															{T._d(item.name)}
 														</h2>
 

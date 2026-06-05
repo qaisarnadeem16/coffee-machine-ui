@@ -23,9 +23,9 @@ export const MobileMenuContainer = styled.div`
 	position: relative;
 	overflow: auto;
 	background: #f4f4f4;
-	border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-	box-shadow: 0px 0px 4px 0px #A0805A;
+	// border-top-left-radius: 10px;
+    // border-top-right-radius: 10px;
+	// box-shadow: 0px 0px 4px 0px #A0805A;
 `;
 
 // Styled component for the container of the steps
@@ -89,40 +89,42 @@ const SectionTitle = styled.h2`
 
 // Section subtitle
 const SectionSubtitle = styled.div`
-	font-size: 12px;
+	font-size: 14px;
 	color: #000;
 	font-weight:700;
-	margin-bottom: 6px;
+	margin-bottom: 0px;
 	text-transform: uppercase;
-	letter-spacing: 0.5px;
+	letter-spacing: 0.3px;
 `;
 
 // Selected option display for circle options
 const SelectedOptionDisplay = styled.div`
-	font-size: 11px;
+	font-size: 12px;
 	color: #000;
-	font-weight: 500;
-	margin-bottom: 8px;
-	
+	font-weight: 600;
+	margin-bottom: 5px;
+
 	span {
-		color: #A0805A;
+		color: #CDA26E;
 		font-weight: 700;
 	}
 `;
 
 // Grid container for options
 const OptionsGrid = styled.div<{ columns?: number }>`
-
 	width: 100%;
 	display: flex;
+	flex-wrap: nowrap;
 	overflow-x: auto;
-	margin-bottom: 10px;
-  /* display: grid;
-  justify-content: center;
+	padding-bottom: 4px;
+	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
+	margin-bottom: 4px;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 
-  grid-template-columns: repeat(${props => props.columns || 3}, 1fr); */
-  gap: ${props => (props.columns === 6 ? '3px' : '12px')}; // smaller gap for circles
-  margin-bottom: 10px;
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 // Option card wrapper to include image and label
@@ -137,26 +139,20 @@ height: 100px; */
 
 // Option card
 const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
-  background: white;
-  border: 2px solid ${props => props.selected ? '#A0805A' : '#e0e0e0'}; /* always show 2px border */
-  border-radius: ${props => (props.columns === 6 ? '50%' : '12px')};
+  background: #f8f8f8;
+  border: 3px solid ${props => props.selected ? '#CDA26E' : 'transparent'};
+  border-radius: ${props => (props.columns === 6 ? '50%' : '2px')};
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  flex: 0 0 auto;
   position: relative;
-  margin: 5px 0;
-  /* height: ${props => (props.columns === 6 ? '55px' : `80px`)}; */
-  /* width: ${props => (props.columns === 6 ? '55px' : `100%`)}; */
-  /* padding: ${props => (props.columns === 6 ? '3.4px' : `6px`)}; */
-
-  &:hover {
-    border-color: ${props => (props.columns === 6 ? 'none' : (props.selected ? '#A0805A' : '#A0805A'))};
-    transform: translateY(-2px);
-    box-shadow: ${props => (props.columns === 6 ? 'none' : '0 4px 12px rgba(160, 128, 90, 0.2)')};
-  }
+  padding: ${props => (props.columns === 6 ? '2.4px' : '0px')};
+  width: ${props => (props.columns === 6 ? '52px' : '75px')};
+  height: ${props => (props.columns === 6 ? '52px' : '75px')};
 
   &:active {
     transform: translateY(0);
@@ -165,13 +161,13 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 
 // Option image container
 const OptionImageContainer = styled.div<{ isRound?: boolean }>`
-	width: 44px;
-	height: 44px;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
-	border-radius: ${props => props.isRound ? '50%' : '8px'};
+	border-radius: ${props => props.isRound ? '50%' : '2px'};
 	background: #f8f8f8;
 
 	img {
@@ -181,22 +177,11 @@ const OptionImageContainer = styled.div<{ isRound?: boolean }>`
 	}
 `;
 
-// Option label - updated to accept columns prop
-const OptionLabel = styled.div<{ columns?: number }>`
-	font-size: ${props => (props.columns === 3 ? '12px' : '9px')};
-	font-weight: 500;
-	color: #333;
-	text-align: center;
-	line-height: 1.2;
-	max-width: ${props => (props.columns === 3 ? '90px' : '55px')};
-	word-wrap: break-word;
-`;
-
 // Color swatch for color options
 const ColorSwatch = styled.div<{ color?: string; isRound?: boolean }>`
-	width: 60px;
-	height: 60px;
-	border-radius: ${props => props.isRound ? '50%' : '8px'};
+	width: 100%;
+	height: 100%;
+	border-radius: ${props => props.isRound ? '50%' : '2px'};
 	background: ${props => props.color || '#ccc'};
 	border: 1px solid #e0e0e0;
 `;
@@ -215,35 +200,18 @@ const Separator = styled.div`
 
 // Full view content container (integrated inline)
 const FullViewContent = styled.div`
-	padding: 15px;
+	padding: 0px 10px;
 	overflow-y: auto;
 	background: white;
 	width: 100%;
 	flex: 1;
-	position:fixed;
-	max-height:40%;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
-	box-shadow: 0px 4px 29.4px 0px #A0805A;
-	margin-bottom: 105px;
+	position:relative;
+	// max-height:40%;
+	// border-top-left-radius: 20px;
+	// border-top-right-radius: 20px;
+	// box-shadow: 0px 4px 29.4px 0px #A0805A;
+	// margin-bottom: 105px;
 `;
-
-const CheckBox = styled.div`
-  position: absolute;
-  top: 2%.5;
-  right: 2.5px;
-  border-radius: 5px;
-  width: 16px;
-  height: 16px;
-  z-index: 5;
-background-color: white;
-`;
-
-const CheckIcon = styled.svg`
-
-  fill: #A0805A; /* or any color you want */
-`;
-
 
 // MobileMenu component that represents the mobile menu where
 // the customer can select the attributes and options
@@ -539,7 +507,7 @@ useEffect(() => {
 
 		return (
 			<FullViewContent>
-				<div className="flex items-center py-1">
+				{/* <div className="flex items-center py-1">
 					<CloseButton
 						onClick={() => {
 							setShowFullView(false);
@@ -566,8 +534,7 @@ useEffect(() => {
 						</svg>
 					</CloseButton>
 
-					{/* <SectionTitle>{selectedGroup.name ? T._d(selectedGroup.name) : 'Customize'}</SectionTitle> */}
-				</div>
+				</div> */}
 
 				{currentItems.map((item, index) => {
 					if (item instanceof ThemeTemplateGroup) {
@@ -585,19 +552,18 @@ useEffect(() => {
 						attributeCounter++;
 
 						// Determine columns based on attribute index
-						// Index 0 = 3 columns, Index 1 = 6 columns
+						// Index 0 = material thumbnails, Index 1 = round finish swatches
 						const columns = currentAttributeIndex === 0 ? 3 : 6;
 						const isRound = currentAttributeIndex === 1;
-						const showOptionNames = columns === 3; // Only show individual names for 3-column layout
 						const selectedOptionName = getSelectedOptionName(attribute.options);
 
 						return (
 							<SectionContainer key={attribute.id}>
-								{/* <SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle> */}
+								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
 
-								{!showOptionNames && selectedOptionName && (
+								{selectedOptionName && (
 									<SelectedOptionDisplay>
-										Selected Option: <span>{selectedOptionName}</span>
+										Selected: <span>{selectedOptionName}</span>
 									</SelectedOptionDisplay>
 								)}
 
@@ -611,13 +577,6 @@ useEffect(() => {
 													columns={columns}
 													onClick={() => handleOptionSelection(option)}
 												>
-													{option.selected && (
-														<CheckBox className="">
-															<CheckIcon viewBox="0 0 24 24">
-																<path d="M20.285 6.709a1 1 0 0 0-1.414-1.418l-9.192 9.21-4.192-4.192a1 1 0 0 0-1.414 1.414l4.9 4.9a1 1 0 0 0 1.414 0l9.908-9.914z" />
-															</CheckIcon>
-														</CheckBox>
-													)}
 													{option.imageUrl ? (
 														<OptionImageContainer isRound={isRound}>
 															<img src={option.imageUrl} alt={T._d(option.name)} />
@@ -626,10 +585,6 @@ useEffect(() => {
 														<ColorSwatch isRound={isRound} />
 													)}
 												</OptionCard>
-
-												{showOptionNames && (
-													<OptionLabel columns={columns}>{T._d(option.name)}</OptionLabel>
-												)}
 											</OptionCardWrapper>
 										)
 									)}
@@ -648,8 +603,8 @@ useEffect(() => {
 			{sellerSettings && sellerSettings.priceInfoText && (
 				<PriceInfoTextContainer dangerouslySetInnerHTML={{ __html: sellerSettings.priceInfoText }} />
 			)}
-
-			<MobileItemsContainer
+<div className="">
+	<MobileItemsContainer
 				isLeftArrowVisible
 				isRightArrowVisible
 				scrollLeft={scrollLeft ?? 0}
@@ -671,6 +626,9 @@ useEffect(() => {
 					else return null;
 				})}
 			</MobileItemsContainer>
+				{renderFullViewContent()}
+</div>
+		
 
 			{selectedGroup && selectedGroup.id !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (
 				<StepsMobileContainer>
@@ -703,7 +661,7 @@ useEffect(() => {
 				</TemplatesContainer>
 			)}
 
-			{renderFullViewContent()}
+		
 
 			{selectedGroup?.id === -2 && isTemplateEditorOpened && (
 				<Designer
