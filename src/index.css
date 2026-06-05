@@ -70,6 +70,6 @@ code {
 
 canvas {
   background-color: rgb(244, 244, 244);
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
