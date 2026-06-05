@@ -32,14 +32,14 @@ const PriceBox = styled.div`
 //   border-radius: 9999px;
   padding: 7px 24px;
   font-size: 22px;
-  font-weight: 400;
-  color: #000;
+  font-weight: 700;
+  color: #121715;
 //   background-color: #fff;
 `;
 
 const AddToCartButton = styled(Button)`
-  background-color: #A0805A;
-  border-radius: 9999px;
+  background-color: #CDA26E;
+  border-radius: 2px;
   color: #fff;
   font-weight: 500;
   min-width: 160px;
@@ -304,7 +304,7 @@ const TopBar = () => {
                 ) : isOutOfStock ? (
                     "OUT OF STOCK"
                 ) : (
-                    "Add to Cart"
+                    "ADD TO CART"
                 )}
             </AddToCartButton>
         </TopBarContainer>

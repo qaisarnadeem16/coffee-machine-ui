@@ -11,15 +11,10 @@ import noImage from '../../assets/images/no_image.png';
 export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 	align-items: center;
 	justify-content: center;
-	min-width: 100px;
-	max-width: 100px;
-	width: 100px;
-	height: 100px;
-	min-height: 100px;
-	max-height: 100px;
 	flex: 1;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	gap: 8px;
 	position: relative;
 	padding: 8px;
 	cursor: pointer;
@@ -28,23 +23,19 @@ export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 
 // Inner card wrapper for the menu item
 export const MenuItemCard = styled.div<{ selected?: boolean }>`
-	width: 100%;
-	height: 80px;
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	border: 2px solid #A0805A;
-	border-radius: 12px;
+	border: 3px solid ${(props) => (props.selected ? '#CDA26E' : 'transparent')};
+	border-radius: 2px;
 	padding: 1px 1px;
-	background-color: ${(props) => (props.selected ? '#A0805A' : '#ffffff')};
+	background-color: #ffffff;
 	transition: all 0.2s ease;
 	position: relative;
-
-	&:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(160, 128, 90, 0.2);
-	}
 `;
 
 // Styled component for the image of each menu item
@@ -52,9 +43,7 @@ export const MenuItemImage = styled.img<{ isRound?: boolean; selected?: boolean 
 	width:100%;
 	height: 100%;
 	object-fit: cover;
-	margin-bottom: 2px;
-	border-radius: ${(props) => (props.isRound ? '50%' : '6px')};
-	// filter: ${(props) => (props.selected ? 'brightness(0) invert(1)' : 'none')};
+	border-radius: ${(props) => (props.isRound ? '50%' : '2px')};
 `;
 
 // Styled component for the wrapper of multiple images in a menu item
@@ -75,14 +64,11 @@ export const MenuItemImagesImageWrapper = styled.div`
 
 // Styled component for the label of each menu item
 export const MenuItemLabel = styled.span<{ selected?: boolean }>`
-	font-size: 12px;
-	font-weight: 500;
-	text-align: center;
-	// overflow: hidden;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: left;
 	text-overflow: ellipsis;
-	// white-space: nowrap;
-	width: 100%;
-	color: ${(props) => (props.selected ? '#333333' : '#333333')};
+	color: ${(props) => (props.selected ? '#121715' : '#000000B2')};
 `;
 
 // Styled component for each image in the menu item
@@ -147,8 +133,9 @@ interface MenuItemProps {
 const MenuItemsWrapper = styled.div`
 	display: flex;
 	justify-content: space-evenly;
+	align-items: center;
 	max-width: 100%;
-	min-height: 116px;
+	min-height: 72px;
 	width: 100%;
 	// overflow-x: auto;
 	background-color: #fff;
@@ -157,9 +144,9 @@ const MenuItemsWrapper = styled.div`
 	z-index:20;
 	position:static;
 	bottom:0;
-	border-top-left-radius: 12px;
-	border-top-right-radius: 12px;
-	box-shadow: 0px 0px 4px 0px #A0805A;
+	// border-top-left-radius: 12px;
+	// border-top-right-radius: 12px;
+	// box-shadow: 0px 0px 4px 0px #A0805A;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 
@@ -186,7 +173,7 @@ const ArrowCss = css`
 	align-items: center;
 	justify-content: center;
 	z-index: 3;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	// box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	cursor: pointer;
 	transition: all 0.2s ease;
 
