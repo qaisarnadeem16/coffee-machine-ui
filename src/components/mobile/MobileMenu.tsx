@@ -151,8 +151,8 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   flex: 0 0 auto;
   position: relative;
   padding: ${props => (props.columns === 6 ? '2.4px' : '0px')};
-  width: ${props => (props.columns === 6 ? '52px' : '75px')};
-  height: ${props => (props.columns === 6 ? '52px' : '75px')};
+  width: ${props => (props.columns === 6 ? '42px' : '55px')};
+  height: ${props => (props.columns === 6 ? '42px' : '55px')};
 
   &:active {
     transform: translateY(0);
@@ -559,7 +559,7 @@ useEffect(() => {
 
 						return (
 							<SectionContainer key={attribute.id}>
-								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
+								{/* <SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle> */}
 
 								{selectedOptionName && (
 									<SelectedOptionDisplay>
