@@ -18,14 +18,14 @@ import useDropdown from "hooks/useDropdown";
 const TopBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  position: relative;
   align-items: center;
   padding:  10px;
+//   height: 60px;
   border-bottom: 1px solid #d1c5b3;
    @media (max-width: 1024px) {
-   postion: fixed;
-   top:0;
-    left:0;
-    right:0;
+  
+   
     border-bottom: none;
     padding:2px 10px;  
   }
@@ -290,6 +290,7 @@ const TopBar = () => {
     console.log('priceprice', price)
     return (
         <TopBarContainer>
+            <div className="flex lg:relative fixed top-0 left-0 right-0 z-20 bg-white  justify-between items-center w-full gap-2 ">
             {/* Price */}
             <div className="">
                 {/* {price !== null && price > 0 && ( */}
@@ -311,6 +312,7 @@ const TopBar = () => {
                     "ADD TO CART"
                 )}
             </AddToCartButton>
+            </div>
         </TopBarContainer>
     );
 };
