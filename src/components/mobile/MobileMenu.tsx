@@ -75,7 +75,7 @@ const CloseButton = styled.button`
 
 // Section container
 const SectionContainer = styled.div`
-	margin-bottom: 15px;
+	// margin-bottom: 15px;
 `;
 
 // Section title
@@ -83,7 +83,7 @@ const SectionTitle = styled.h2`
 	font-size: 14px;
 	font-weight: 600;
 	color: #1a1a1a;
-	margin: 0 0 6px 0;
+	// margin: 0 0 6px 0;
 	padding-right: 40px;
 `;
 
@@ -102,7 +102,7 @@ const SelectedOptionDisplay = styled.div`
 	font-size: 12px;
 	color: #000;
 	font-weight: 600;
-	margin-bottom: 5px;
+	// margin-bottom: 5px;
 
 	span {
 		color: #CDA26E;
@@ -118,7 +118,7 @@ const OptionsGrid = styled.div<{ columns?: number }>`
 	overflow-x: auto;
 	// padding-bottom: 4px;
 	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
-	margin-bottom: 4px;
+	// margin-bottom: 4px;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 
@@ -195,7 +195,7 @@ const LargeOptionCard = styled(OptionCard)`
 // Horizontal separator
 const Separator = styled.div`
 	border: 1px solid #A0805A;
-	margin: 14px 0;
+	margin: 5px 0;
 `;
 
 // Full view content container (integrated inline)

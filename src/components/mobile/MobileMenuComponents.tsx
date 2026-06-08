@@ -135,12 +135,12 @@ const MenuItemsWrapper = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	max-width: 100%;
-	min-height: 72px;
+	min-height: 52px;
 	width: 100%;
 	// overflow-x: auto;
 	background-color: #fff;
 	// border-top: 1px #e0e0e0 solid;
-	padding: 8px 0;
+	// padding: 8px 0;
 	z-index:20;
 	position:static;
 	bottom:0;
