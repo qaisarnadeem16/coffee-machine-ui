@@ -19,11 +19,11 @@ const TopBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding:  10px;
   border-bottom: 1px solid #d1c5b3;
    @media (max-width: 1024px) {
     border-bottom: none;
-    padding:10px 10px;  
+    padding:2px 10px;  
   }
 `;
 
