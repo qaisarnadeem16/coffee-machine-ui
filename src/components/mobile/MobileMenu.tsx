@@ -603,7 +603,7 @@ useEffect(() => {
 			{sellerSettings && sellerSettings.priceInfoText && (
 				<PriceInfoTextContainer dangerouslySetInnerHTML={{ __html: sellerSettings.priceInfoText }} />
 			)}
-<div className="">
+<div className=" fixed bottom-0 left-0 right-0 z-10">
 	<MobileItemsContainer
 				isLeftArrowVisible
 				isRightArrowVisible

@@ -52,7 +52,7 @@ function LayoutMobile() {
   const {isSceneLoading}=useZakeke()
   return (
     <MobileContainer>
-      <TopBar/>
+      {!isSceneLoading &&<TopBar/>}
       <Viewer3D /> {/* Renders the 3D viewer */}
       
       {!isSceneLoading && <MobileMenu />}
