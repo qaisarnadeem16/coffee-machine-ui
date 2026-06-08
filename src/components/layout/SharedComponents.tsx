@@ -216,7 +216,7 @@ export const ViewerContainer = styled.div`
 	padding: 5px;
 	
 	@media (max-width: 1024px) {
-		padding: 0px 10px 15px;
+		// padding: 0px 10px 15px;
 		height: 100%;
 	}
 `;
