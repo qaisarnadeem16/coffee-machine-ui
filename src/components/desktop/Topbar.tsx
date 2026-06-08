@@ -290,7 +290,7 @@ const TopBar = () => {
     console.log('priceprice', price)
     return (
         <TopBarContainer>
-            <div className="flex lg:relative fixed top-0 left-0 right-0 z-20 bg-white  justify-between items-center w-full gap-2 ">
+            <div className="flex lg:relative fixed top-0 left-0 right-0 z-20 bg-[#f4f4f4]  justify-between items-center w-full gap-2 ">
             {/* Price */}
             <div className="">
                 {/* {price !== null && price > 0 && ( */}
