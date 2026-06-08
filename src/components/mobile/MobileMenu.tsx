@@ -116,7 +116,7 @@ const OptionsGrid = styled.div<{ columns?: number }>`
 	display: flex;
 	flex-wrap: nowrap;
 	overflow-x: auto;
-	padding-bottom: 4px;
+	// padding-bottom: 4px;
 	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
 	margin-bottom: 4px;
 	-ms-overflow-style: none;

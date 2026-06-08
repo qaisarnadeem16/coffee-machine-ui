@@ -22,6 +22,10 @@ const TopBarContainer = styled.div`
   padding:  10px;
   border-bottom: 1px solid #d1c5b3;
    @media (max-width: 1024px) {
+   postion: fixed;
+   top:0;
+    left:0;
+    right:0;
     border-bottom: none;
     padding:2px 10px;  
   }
