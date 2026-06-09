@@ -32,8 +32,8 @@ export const GroupItem = styled.div`
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
-	height: 144px;
-	width: 100%;
+	height: 123px;
+	width: 124px;
 	margin-bottom: 10px;
 	margin-top: 20px;
 	text-align: center;
@@ -214,10 +214,20 @@ export const ViewerContainer = styled.div`
 	min-height: 0;
 	// padding: 40px 60px;
 	padding: 5px;
-	
+
 	@media (max-width: 1024px) {
 		// padding: 0px 10px 15px;
 		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	/* Make the Zakeke WebGL canvas fill its box so the model keeps the
+	   correct aspect ratio instead of stretching when the height is fixed. */
+	canvas {
+		display: block;
+		width: 100% !important;
+		height: 100% !important;
 	}
 `;
 
