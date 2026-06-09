@@ -23,16 +23,16 @@ export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 
 // Inner card wrapper for the menu item
 export const MenuItemCard = styled.div<{ selected?: boolean }>`
-	width: 48px;
-	height: 48px;
-	min-width: 48px;
+	width: 40px;
+	height: 40px;
+	min-width: 40px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	border: 3px solid ${(props) => (props.selected ? '#CDA26E' : 'transparent')};
+	border: 2px solid ${(props) => (props.selected ? '#CDA26E' : 'transparent')};
 	border-radius: 2px;
-	padding: 1px 1px;
+	// padding: 1px 1px;
 	background-color: #ffffff;
 	transition: all 0.2s ease;
 	position: relative;
@@ -68,7 +68,7 @@ export const MenuItemLabel = styled.span<{ selected?: boolean }>`
 	font-weight: 700;
 	text-align: left;
 	text-overflow: ellipsis;
-	color: ${(props) => (props.selected ? '#121715' : '#000000B2')};
+	color: ${(props) => (props.selected ? '#121715' : '#7d817f')};
 `;
 
 // Styled component for each image in the menu item

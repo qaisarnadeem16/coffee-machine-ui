@@ -89,7 +89,7 @@ const SectionTitle = styled.h2`
 
 // Section subtitle
 const SectionSubtitle = styled.div`
-	font-size: 14px;
+	font-size: 12px;
 	color: #000;
 	font-weight:700;
 	margin-bottom: 0px;
@@ -99,9 +99,9 @@ const SectionSubtitle = styled.div`
 
 // Selected option display for circle options
 const SelectedOptionDisplay = styled.div`
-	font-size: 12px;
+	font-size: 10px;
 	color: #000;
-	font-weight: 600;
+	font-weight: 500;
 	// margin-bottom: 5px;
 
 	span {
@@ -116,7 +116,7 @@ const OptionsGrid = styled.div<{ columns?: number }>`
 	display: flex;
 	flex-wrap: nowrap;
 	overflow-x: auto;
-	// padding-bottom: 4px;
+	padding-bottom: 2px;
 	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
 	// margin-bottom: 4px;
 	-ms-overflow-style: none;
@@ -150,9 +150,9 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
   justify-content: center;
   flex: 0 0 auto;
   position: relative;
-  padding: ${props => (props.columns === 6 ? '2.4px' : '0px')};
-  width: ${props => (props.columns === 6 ? '42px' : '55px')};
-  height: ${props => (props.columns === 6 ? '42px' : '55px')};
+  padding: ${props => (props.columns === 6 ? '1px' : '0px')};
+  width: ${props => (props.columns === 6 ? '35px' : '82px')};
+  height: ${props => (props.columns === 6 ? '35px' : '81px')};
 
   &:active {
     transform: translateY(0);
@@ -559,7 +559,7 @@ useEffect(() => {
 
 						return (
 							<SectionContainer key={attribute.id}>
-								{/* <SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle> */}
+								<SectionSubtitle>{T._d(attribute.name)}</SectionSubtitle>
 
 								{selectedOptionName && (
 									<SelectedOptionDisplay>
@@ -603,7 +603,7 @@ useEffect(() => {
 			{sellerSettings && sellerSettings.priceInfoText && (
 				<PriceInfoTextContainer dangerouslySetInnerHTML={{ __html: sellerSettings.priceInfoText }} />
 			)}
-<div className=" fixed bottom-0 left-0 right-0 z-10">
+{/* <div className=" fixed bottom-0 left-0 right-0 z-10"> */}
 	<MobileItemsContainer
 				isLeftArrowVisible
 				isRightArrowVisible
@@ -627,7 +627,7 @@ useEffect(() => {
 				})}
 			</MobileItemsContainer>
 				{renderFullViewContent()}
-</div>
+{/* </div> */}
 		
 
 			{selectedGroup && selectedGroup.id !== -2 && selectedGroup.steps && selectedGroup.steps.length > 0 && (

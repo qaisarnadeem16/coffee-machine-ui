@@ -64,10 +64,14 @@ const SliderArrow = styled<React.FC<React.ComponentProps<typeof Icon> & { arrowD
 
 // Grid container for options - matching mobile design
 const OptionsGrid = styled.div<{ columns?: number }>`
-	display: grid;
-	justify-content: center;
-	grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
-	gap: ${props => (props.columns === 6 ? '6px' : '12px')};
+display: flex;
+justify-content: start;
+flex-wrap: wrap;
+width: 100%;
+	// display: grid;
+	// justify-content: center;
+	// grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
+	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
 	padding:10px 0px;
 `;
 
@@ -82,7 +86,7 @@ const OptionCardWrapper = styled.div`
 // Option card - matching mobile design
 const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
 	background: white;
-	border: 3px solid ${props => props.selected ? '#CDA26E' : '#ffff'};
+	border: 1px solid ${props => props.selected ? '#CDA26E' : '#ffff'};
 	border-radius: ${props => (props.columns === 6 ? '50%' : '2px')};
 	cursor: pointer;
 	transition: all 0.2s ease;
@@ -91,6 +95,8 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 	align-items: center;
 	justify-content:center;
 	gap: 8px;
+	max-height: ${props => (props.columns === 6 ? '60px' : '123px')};
+	max-width: ${props => (props.columns === 6 ? '60px' : '124px')};
 	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
 	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
 	padding: ${props => (props.columns === 6 ? '2.4px' : `0px`)};
@@ -599,7 +605,7 @@ const DesktopRightSidebar = () => {
 		<DesktopRightSidebarContainer>
 			<AttributesContainer key={selectedAttributeId}>
 				<TopBar />
-				<div className="grid lg:grid-cols-3 grid-cols-1 gap-3 py-3 ">
+				<div className="flex justify-start gap-[10px]  ">
 					{actualGroups &&
 						!(actualGroups.length === 1 && actualGroups[0].name.toLowerCase() === 'other') &&
 						actualGroups.map((group) => {
@@ -641,7 +647,7 @@ const DesktopRightSidebar = () => {
 									<>
 										{currentAttributes.map((attribute, index) => (
 											<div key={attribute.id}>
-												<h2 className='text-lg lg:text-2xl font-bold text-black py-3 mt-5 border-t-2 border-primary'>
+												<h2 className='text-lg lg:text-2xl font-bold text-[#171717] py-3 mt-5 border-t-1 border-primary'>
 													{T._d(attribute.name)}
 												</h2>
 												{renderOptionsGrid(attribute, index)}
@@ -682,7 +688,7 @@ const DesktopRightSidebar = () => {
 																: () => handleAttributeSelection(item.id, true)
 														}
 													>
-														<h2 className='text-lg lg:text-2xl font-bold uppercase text-black pt-3 mt-5 border-t-2 border-primary'>
+														<h2 className='text-lg lg:text-xl font-bold uppercase text-black pt-3 mt-5 border-t border-primary'>
 															{T._d(item.name)}
 														</h2>
 
