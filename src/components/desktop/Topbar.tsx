@@ -20,7 +20,7 @@ const TopBarContainer = styled.div`
   justify-content: space-between;
   position: relative;
   align-items: center;
-  padding:  10px;
+  padding:  10px 0;
 //   height: 60px;
   border-bottom: 1px solid #CCB086;
    @media (max-width: 1024px) {
@@ -34,7 +34,7 @@ const TopBarContainer = styled.div`
 const PriceBox = styled.div`
 //   border: 1.5px solid #A0805A;
 //   border-radius: 9999px;
-  padding: 7px 24px;
+//   padding: 7px 24px;
   font-size: 22px;
   font-weight: 700;
   color: #121715;

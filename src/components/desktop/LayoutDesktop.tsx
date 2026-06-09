@@ -27,7 +27,7 @@ export const Top = styled.div`
 	position: relative;
 	display: grid;
 	gap: 5px;
-	grid-template-columns: 1fr 27%;
+	grid-template-columns: 1fr 29%;
 	min-height: 0;
   
   @media (max-width: 1024px) {
