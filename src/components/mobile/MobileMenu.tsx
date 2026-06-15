@@ -89,7 +89,7 @@ const SectionTitle = styled.h2`
 
 // Section subtitle
 const SectionSubtitle = styled.div`
-	font-size: 12px;
+	font-size: 14px;
 	color: #000;
 	font-weight:700;
 	margin-bottom: 0px;
@@ -99,7 +99,7 @@ const SectionSubtitle = styled.div`
 
 // Selected option display for circle options
 const SelectedOptionDisplay = styled.div`
-	font-size: 10px;
+	font-size: 12px;
 	color: #000;
 	font-weight: 500;
 	// margin-bottom: 5px;
@@ -117,7 +117,7 @@ const OptionsGrid = styled.div<{ columns?: number }>`
 	flex-wrap: nowrap;
 	overflow-x: auto;
 	padding-bottom: 2px;
-	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
+	gap: ${props => (props.columns === 6 ? '10px' : '0px')};
 	// margin-bottom: 4px;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -140,7 +140,7 @@ height: 100px; */
 // Option card
 const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; columns?: number }>`
   background: #f8f8f8;
-  border: 3px solid ${props => props.selected ? '#CDA26E' : 'transparent'};
+  border: 2px solid ${props => props.selected ? '#CDA26E' : 'transparent'};
   border-radius: ${props => (props.columns === 6 ? '50%' : '2px')};
   cursor: pointer;
   transition: all 0.2s ease;
@@ -201,7 +201,7 @@ const Separator = styled.div`
 // Full view content container (integrated inline)
 const FullViewContent = styled.div`
 	padding: 0px 10px;
-	overflow-y: auto;
+	// overflow-y: auto;
 	background: white;
 	width: 100%;
 	flex: 1;
