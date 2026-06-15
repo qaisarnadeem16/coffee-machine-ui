@@ -26,7 +26,7 @@ export const Container = styled.div`
 export const MobileContainer = styled.div`
   position: relative;
   display:grid;
-  grid-template-rows: auto 350px 1fr;
+  grid-template-rows: auto 280px 1fr;
   height:100%;
   width:100%;
   overflow:hidden;

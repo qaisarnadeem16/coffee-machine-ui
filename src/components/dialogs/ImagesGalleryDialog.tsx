@@ -6,7 +6,7 @@ import { TailSpin } from 'react-loader-spinner';
 import { T } from '../../Helpers';
 
 const CustomWindow = styled(DialogWindow)`
-    flex-basis: 350px;
+    flex-basis: 280px;
 `;
 
 const CategoriesList = styled.ul`
