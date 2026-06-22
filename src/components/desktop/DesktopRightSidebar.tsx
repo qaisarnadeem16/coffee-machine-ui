@@ -66,7 +66,7 @@ const SliderArrow = styled<React.FC<React.ComponentProps<typeof Icon> & { arrowD
 const OptionsGrid = styled.div<{ columns?: number }>`
 display: flex;
 justify-content: start;
-flex-wrap: wrap;
+// flex-wrap: wrap;
 width: 100%;
 	// display: grid;
 	// justify-content: center;
