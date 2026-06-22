@@ -71,7 +71,7 @@ width: 100%;
 	// display: grid;
 	// justify-content: center;
 	// grid-template-columns: repeat(${props => props.columns || 3}, 1fr);
-	gap: ${props => (props.columns === 6 ? '10px' : '10px')};
+	gap: ${props => (props.columns === 6 ? '10px' : '5px')};
 	padding:10px 0px;
 `;
 
@@ -96,7 +96,7 @@ const OptionCard = styled.button<{ selected?: boolean; isRound?: boolean; column
 	justify-content:center;
 	gap: 8px;
 	max-height: ${props => (props.columns === 6 ? '60px' : '123px')};
-	max-width: ${props => (props.columns === 6 ? '60px' : '124px')};
+	max-width: ${props => (props.columns === 6 ? '60px' : '110px')};
 	width: ${props => (props.columns === 6 ? '55px' : `100%`)};
 	min-height: ${props => (props.columns === 6 ? '55px' : `80px`)};
 	padding: ${props => (props.columns === 6 ? '2.4px' : `0px`)};
