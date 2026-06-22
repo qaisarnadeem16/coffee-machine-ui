@@ -33,7 +33,7 @@ export const GroupItem = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 123px;
-	width: 124px;
+	width: 114px;
 	margin-bottom: 10px;
 	margin-top: 20px;
 	text-align: center;
