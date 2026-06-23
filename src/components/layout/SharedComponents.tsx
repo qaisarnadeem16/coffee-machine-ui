@@ -7,8 +7,11 @@ import { ReactComponent as ArSolid } from '../../assets/icons/ar.svg';
 import { ReactComponent as AISolid } from '../../assets/icons/ai.svg';
 
 export const GroupsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
+	// display: flex;
+	// flex-direction: column;
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat( 3, 1fr);
 	min-width: 130px;
 	width: 130px;
 	overflow: auto;
@@ -32,8 +35,12 @@ export const GroupItem = styled.div`
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
-	height: 123px;
-	width: 114px;
+	height: 100%;
+	width: 100%;
+	// height: 123px;
+	// width: 124px;
+	// max-width: 124px;
+	// max-height: 123px;
 	margin-bottom: 10px;
 	margin-top: 20px;
 	text-align: center;
