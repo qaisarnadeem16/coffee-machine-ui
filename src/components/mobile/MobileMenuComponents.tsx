@@ -18,6 +18,8 @@ export const MobileItemContainer = styled.div<{ selected?: boolean }>`
 	position: relative;
 	padding: 8px;
 	cursor: pointer;
+	border-bottom: 2px solid #CDA26E;
+	margin-bottom: 5px;
 	z-index:1000;
 `;
 
@@ -149,7 +151,7 @@ const MenuItemsWrapper = styled.div`
 	// box-shadow: 0px 0px 4px 0px #A0805A;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
-
+padding: 0px 10px;
 	::-webkit-scrollbar {
 		display: none;
 	}
