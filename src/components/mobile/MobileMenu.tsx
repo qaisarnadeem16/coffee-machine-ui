@@ -194,7 +194,7 @@ const LargeOptionCard = styled(OptionCard)`
 
 // Horizontal separator
 const Separator = styled.div`
-	border: 1px solid #A0805A;
+	border: 1px solid #CDA26E;
 	margin: 5px 0;
 `;
 
@@ -209,7 +209,7 @@ const FullViewContent = styled.div`
 	// max-height:40%;
 	// border-top-left-radius: 20px;
 	// border-top-right-radius: 20px;
-	// box-shadow: 0px 4px 29.4px 0px #A0805A;
+	// box-shadow: 0px 4px 29.4px 0px #CDA26E;
 	// margin-bottom: 105px;
 `;
 

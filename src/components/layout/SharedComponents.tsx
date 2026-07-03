@@ -138,7 +138,7 @@ export const ItemName = styled.span`
 export const ItemAccordion = styled.div<{ opened?: boolean }>`
 	width: 100%;
 	display: grid;
-	grid-template-columns: 1fr 20px;
+	grid-template-columns: 1fr 0px;
 	cursor: pointer;
 	/* margin-bottom: 20px; */
 	/* ${(props) => props.opened && `border-bottom: 5px solid #f5f6f7;`} */
