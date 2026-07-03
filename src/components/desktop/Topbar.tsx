@@ -27,7 +27,7 @@ const TopBarContainer = styled.div`
   
    
     border-bottom: none;
-    padding:2px 10px;  
+    padding:10px 10px 2px;
   }
 `;
 
